@@ -39,7 +39,7 @@ useEffect(() => {
 
     selfObserver(targetNode);
 
-}, [window.location.href]);
+}, []);
 
 const selfObserver = (documentNode: HTMLElement) => {
   const observer = new MutationObserver(() => {
