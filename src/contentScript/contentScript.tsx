@@ -36,9 +36,9 @@ const App: React.FC<{}> = () => {
 
 useEffect(() => {
   const targetNode = document.getElementById('movie_player') || document.body;
-  setInterval(()=>{
+
     selfObserver(targetNode);
-  },100)
+
 }, [window.location.href]);
 
 const selfObserver = (documentNode: HTMLElement) => {
@@ -98,17 +98,7 @@ const adFunction = () => {
     (textOverlay[0] as HTMLElement).style.display = 'none';
   }
 };
-chrome.runtime.sendMessage({ message: "Hello from contentScript.js" }, function (response) {
-  console.log(response);
-  // Check the response received from the background script
-  if (response && response.success) {
-    // Handle the response if it is true
-    console.log("Response is true");
-  } else {
-    // Handle the response if it is false or not available
-    console.log("Response is false or not available");
-  }
-});
+
   return (
     <>
     </>
