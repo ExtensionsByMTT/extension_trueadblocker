@@ -1,14 +1,18 @@
 // TODO: content script
-import React ,{useEffect} from "react";
+import React ,{useEffect,useState} from "react";
 import ReactDOM from "react-dom";
 import "./contentScript.css";
 
 
 
 const App: React.FC<{}> = () => {
-
+  const [messages, setMessages] = useState()
+  console.log(messages,"message")
+  const [first, setfirst] = useState(window.location.href)
+//blocking unwanted ads from some popular websites 
   useEffect(()=>{
 
+ 
     const divs = document.getElementsByTagName("div");
     for (const div of divs) {
       // console.log("filter function loop is running");
@@ -18,6 +22,7 @@ const App: React.FC<{}> = () => {
         "banner",
         "GoogleActiveViewElement",
         "desktopAd",
+    
       ];
       if (
         classesToCheck.some((className) => div.classList.contains(className))
@@ -25,20 +30,19 @@ const App: React.FC<{}> = () => {
         div.style.display = "none";
         // console.log("div blocked");
       }
-    }
+    
     // for blocking yt-popUp Ads
     if (document.getElementsByClassName("style-scope ytd-rich-grid-row")[0] !== undefined ) {
       const richGridRow = document.getElementsByClassName("style-scope ytd-rich-grid-row")[0] as HTMLElement;
       richGridRow.style.display = "none";
     } 
+   }
   },[])
 
 
 useEffect(() => {
   const targetNode = document.getElementById('movie_player') || document.body;
-
     selfObserver(targetNode);
-
 }, []);
 
 const selfObserver = (documentNode: HTMLElement) => {
@@ -99,6 +103,26 @@ const adFunction = () => {
   }
 };
 
+// Listen for messages from the content script
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  setMessages(request.greeting)
+    // Send a response back to the popup script if needed
+    sendResponse({farewell:"receive"})
+});
+
+//blocking bannner ads on twitch.tv
+useEffect(() => {
+  window.onload = function img() {
+    const aElements = document.getElementsByTagName("img");
+
+    for (const aTag of aElements) {
+      const alt = aTag.getAttribute("alt");
+      if (alt === "Panel Content") {
+        aTag.style.setProperty("visibility", "hidden", "important"); 
+      }
+    }
+  };
+}, [first]);
   return (
     <>
     </>
