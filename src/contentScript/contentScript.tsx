@@ -7,13 +7,13 @@ import "./contentScript.css";
 
 const App: React.FC<{}> = () => {
   const [messages, setMessages] = useState()
-  console.log(messages,"message")
-  const [first, setfirst] = useState(window.location.href)
-//blocking unwanted ads from some popular websites 
-  useEffect(()=>{
 
- 
-    const divs = document.getElementsByTagName("div");
+  const [first, setfirst] = useState(window.location.href)
+
+
+//blocking unwanted ads from some popular websites 
+function otherAds(){
+  const divs = document.getElementsByTagName("div");
     for (const div of divs) {
       // console.log("filter function loop is running");
       const classesToCheck = [
@@ -37,13 +37,45 @@ const App: React.FC<{}> = () => {
       richGridRow.style.display = "none";
     } 
    }
-  },[])
+}
 
-
-useEffect(() => {
+// get the YT Dom 
+function getDom(){
   const targetNode = document.getElementById('movie_player') || document.body;
-    selfObserver(targetNode);
-}, []);
+  selfObserver(targetNode);
+}
+
+//running blocker for first time
+// useEffect(() => {
+//     otherAds();
+//     getDom();
+// }, []);
+
+
+//running blocker according to toogle 
+
+useEffect(()=>{
+if(messages === undefined){
+
+  otherAds();
+  getDom()
+ console.log("undedined")
+}
+},[])
+
+
+useEffect(()=>{
+if(messages){
+
+  otherAds();
+  getDom()
+console.log("hey")
+}else if(messages === false){
+  console.log("false")
+}
+},[messages])
+
+
 
 const selfObserver = (documentNode: HTMLElement) => {
   const observer = new MutationObserver(() => {
@@ -103,12 +135,17 @@ const adFunction = () => {
   }
 };
 
+
+
 // Listen for messages from the content script
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  setMessages(request.greeting)
-    // Send a response back to the popup script if needed
-    sendResponse({farewell:"receive"})
-});
+
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    //  setMessages(request.greeting)
+setMessages(request.greeting)
+       // Send a response back to the popup script if needed
+       sendResponse({farewell:"receive"})
+   });
+
 
 //blocking bannner ads on twitch.tv
 useEffect(() => {
