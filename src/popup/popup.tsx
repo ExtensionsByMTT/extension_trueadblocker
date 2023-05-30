@@ -8,9 +8,9 @@ const App: React.FC<{}> = () => {
   return (
     <>
     <div className="adblocker">
-      <Header />
+  {/* <Header/> */}
       <Toogle/>
-      <Body/>
+   {/* <Body/> */}
     </div>
   </>
   );
@@ -161,67 +161,83 @@ const Body = () => {
 };
 
 const Toogle=()=>{
-  const [isActiveYoutube, setIsActiveYoutube] = useState(true);
-  const [isActiveTwitch, setIsActiveTwitch] = useState(false);
-  useEffect(() => {
-    const storedData = localStorage.getItem("appData");
-    if (storedData) {
-      const parsedData = JSON.parse(storedData);
-      setIsActiveYoutube(parsedData.isActiveYoutube);
-      setIsActiveTwitch(parsedData.isActiveTwitch);
-    }
-  }, []);
 
-  useEffect(() => {
-    const dataToStore = { isActiveYoutube, isActiveTwitch };
-    localStorage.setItem("appData", JSON.stringify(dataToStore));
-  }, [isActiveYoutube, isActiveTwitch]);
 
-  const handleToggleYoutube = () => {
-    setIsActiveYoutube(!isActiveYoutube);
-    const message = { greeting: !isActiveYoutube };
+  // const handleToggleYoutube = () => {
+  //   setIsActiveYoutube(!isActiveYoutube);
+  //   const message = { greeting: !isActiveYoutube };
 
+  //   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+  //     const activeTab = tabs[0];
+  //     if (activeTab) {
+  //       chrome.tabs.sendMessage(activeTab.id!, message, (response) => {
+  //         if (response && response.farewell) {
+  //           console.log(response.farewell, "hey");
+  //         }
+  //       });
+  //     }
+  //   });
+  // };
+
+
+
+
+  //////////////////////////////////
+
+  const tunOffAdBlc = () => {
+    const message = { message: true };
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0];
       if (activeTab) {
         chrome.tabs.sendMessage(activeTab.id!, message, (response) => {
           if (response && response.farewell) {
-            console.log(response.farewell, "hey");
+            console.log(response.farewell, "response");
           }
         });
       }
     });
   };
 
-  const handleToggleTwitch = () => {
-    setIsActiveTwitch(!isActiveTwitch);
+  const turnOnAdBlc = () => {
+    const message = { message: false };
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0];
+      if (activeTab) {
+        chrome.tabs.sendMessage(activeTab.id!, message, (response) => {
+          if (response && response.farewell) {
+            console.log(response.farewell, "response");
+          }
+        });
+      }
+    });
   };
+
+/////////////////////////////////
+
 return(
   <div className="popup">
-      <div>
-        <h1>Blocks YouTube Ads</h1>
-      </div>
-      <div>
-        <input
-          type="checkbox"
-          id="youtubeSwitch"
-          checked={isActiveYoutube}
-          onChange={handleToggleYoutube}
-        />
-        <label htmlFor="youtubeSwitch">Toggle YouTube</label>
-      </div>
-      <div>
-        <h1>Blocks Twitch Ads</h1>
-      </div>
-      <div>
-        <input
-          type="checkbox"
-          id="twitchSwitch"
-          checked={isActiveTwitch}
-          onChange={handleToggleTwitch}
-        />
-        <label htmlFor="twitchSwitch">Toggle Twitch</label>
-      </div>
+    
+       <div style={{display:"flex",alignItems:"center",gap:"46px"}}> 
+       <h3>Blocks YouTube Ads</h3>
+ <input
+   type="checkbox"
+   id="youtubeSwitch"
+
+  //  onChange={handleToggleYoutube}
+ />
+ <label htmlFor="youtubeSwitch">Toggle YouTube</label>
+</div>
+     
+      <div style={{display:"flex",alignItems:"center",gap:"52px"}}>  <h3>Blocks Twitch Ads</h3>
+      <input
+        type="checkbox"
+        id="twitchSwitch"
+     
+        // onChange={handleToggleTwitch}
+      />
+      <label htmlFor="twitchSwitch">Toggle Twitch</label></div>
+     <button onClick={tunOffAdBlc}>turn on</button>
+     <button onClick={turnOnAdBlc}>turn off</button>
     </div>
 )
 }
