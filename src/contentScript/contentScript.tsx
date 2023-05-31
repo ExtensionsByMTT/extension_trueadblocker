@@ -240,8 +240,9 @@ const App: React.FC<{}> = () => {
         );
       }
     };
+    adFunction()
   };
-  removeAdBlocker();
+ 
   //////////////////YT ad //////////////////////
 
   return <></>;

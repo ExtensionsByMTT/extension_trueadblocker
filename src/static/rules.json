@@ -114,7 +114,6 @@
       "action" : { "type" : "block" },
       "condition" : {
         "urlFilter" : "amazon-adsystem",
-        "domains" : ["twitch.tv","player.twitch.tv"],
         "resourceTypes" : ["script","main_frame","sub_frame","image","object","xmlhttprequest","ping","csp_report","media","websocket","other"]
       }
     },
@@ -124,7 +123,7 @@
       "action" : { "type" : "block" },
       "condition" : {
         "urlFilter" : "cdn.krxd.net",
-        "domains" : ["twitch.tv","player.twitch.tv"],
+       
         "resourceTypes" : ["script","main_frame","sub_frame","image","object","xmlhttprequest","ping","csp_report","media","websocket","other"]
       }
     },
@@ -134,7 +133,7 @@
       "action" : { "type" : "block" },
       "condition" : {
         "urlFilter" : "script.ioam.de",
-        "domains" : ["twitch.tv","player.twitch.tv"],
+      
         "resourceTypes" : ["script","main_frame","sub_frame","image","object","xmlhttprequest","ping","csp_report","media","websocket","other"]
       }
     },
@@ -144,7 +143,7 @@
       "action" : { "type" : "block" },
       "condition" : {
         "urlFilter" : "edge.quantserve.com",
-        "domains" : ["twitch.tv","player.twitch.tv"],
+       
         "resourceTypes" : ["script","main_frame","sub_frame","image","object","xmlhttprequest","ping","csp_report","media","websocket","other"]
       }
     },
@@ -154,7 +153,7 @@
       "action" : { "type" : "block" },
       "condition" : {
         "urlFilter" : "ddacn6pr5v0tl.cloudfront.net",
-        "domains" : ["twitch.tv","player.twitch.tv"],
+      
         "resourceTypes" : ["script","main_frame","sub_frame","image","object","xmlhttprequest","ping","csp_report","media","websocket","other"]
       }
     },
@@ -164,7 +163,7 @@
       "action" : { "type" : "block" },
       "condition" : {
         "urlFilter" : "d2v02itv0y9u9t.cloudfront.net",
-        "domains" : ["twitch.tv","player.twitch.tv"],
+       
         "resourceTypes" : ["script","main_frame","sub_frame","image","object","xmlhttprequest","ping","csp_report","media","websocket","other"]
       }
     },
@@ -174,7 +173,7 @@
       "action" : { "type" : "block" },
       "condition" : {
         "urlFilter" : "imrworldwide.com",
-        "domains" : ["twitch.tv","player.twitch.tv"],
+       
         "resourceTypes" : ["script","main_frame","sub_frame","image","object","xmlhttprequest","ping","csp_report","media","websocket","other"]
       }
     },
@@ -184,7 +183,7 @@
       "action" : { "type" : "block" },
       "condition" : {
         "urlFilter" : "countess.twitch.tv",
-        "domains" : ["twitch.tv","player.twitch.tv"],
+      
         "resourceTypes" : ["script","main_frame","sub_frame","image","object","xmlhttprequest","ping","csp_report","media","websocket","other"]
       }
     },
@@ -194,7 +193,7 @@
       "action" : { "type" : "block" },
       "condition" : {
         "urlFilter" : "scorecardresearch",
-        "domains" : ["twitch.tv","player.twitch.tv"],
+        
         "resourceTypes" : ["script","main_frame","sub_frame","image","object","xmlhttprequest","ping","csp_report","media","websocket","other"]
       }
     },
@@ -204,7 +203,7 @@
       "action" : { "type" : "block" },
       "condition" : {
         "urlFilter" : "googletagservices",
-        "domains" : ["twitch.tv","player.twitch.tv"],
+      
         "resourceTypes" : ["script","main_frame","sub_frame","image","object","xmlhttprequest","ping","csp_report","media","websocket","other"]
       }
     },
@@ -214,7 +213,7 @@
       "action" : { "type" : "block" },
       "condition" : {
         "urlFilter" : "branch.io",
-        "domains" : ["twitch.tv","player.twitch.tv"],
+       
         "resourceTypes" : ["script","main_frame","sub_frame","image","object","xmlhttprequest","ping","csp_report","media","websocket","other"]
       }
     },
@@ -224,7 +223,7 @@
       "action" : { "type" : "block" },
       "condition" : {
         "urlFilter" : "comscore.com",
-        "domains" : ["twitch.tv","player.twitch.tv"],
+       
         "resourceTypes" : ["script","main_frame","sub_frame","image","object","xmlhttprequest","ping","csp_report","media","websocket","other"]
       }
     }
