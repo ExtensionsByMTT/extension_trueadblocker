@@ -9,7 +9,6 @@ const App: React.FC<{}> = () => {
 
       <Loader />
       <Toogle />
-      <Body/>
     </>
   );
 };
@@ -90,7 +89,6 @@ const Header = () => {
 };
 
 const Body = () => {
-  
   return (
     <>
       <div className="list mar">
@@ -156,105 +154,88 @@ const Body = () => {
 
 const Toogle = () => {
   const [isActiveYoutube, setIsActiveYoutube] = useState(true);
-  const [isActiveTwitch, setIsActiveTwitch] = useState(false);
+ console.log(isActiveYoutube)
+  useEffect(()=>{
+   const state= localStorage.getItem("appData");
+   
+   setIsActiveYoutube(JSON.parse(state));
+  },[])
 
-  useEffect(() => {
-    const storedData = localStorage.getItem("appData");
-    if (storedData) {
-      const parsedData = JSON.parse(storedData);
-      setIsActiveYoutube(parsedData.isActiveYoutube);
-      setIsActiveTwitch(parsedData.isActiveTwitch);
-    }
-  }, []);
 
-  useEffect(() => {
-    const dataToStore = { isActiveYoutube, isActiveTwitch };
-    localStorage.setItem("appData", JSON.stringify(dataToStore));
-  }, [isActiveYoutube, isActiveTwitch]);
 
-  //////////////////////////////////
-
-  const tunOffAdBlc = () => {
-    setIsActiveYoutube(!isActiveYoutube);
-    const message = { message: true };
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const activeTab = tabs[0];
-      if (activeTab) {
-        chrome.tabs.sendMessage(activeTab.id!, message, (response) => {
-          if (response && response.farewell) {
-            console.log(response.farewell, "response");
-          }
-        });
-      }
-    });
-  };
-
-  const turnOnAdBlc = () => {
-    setIsActiveYoutube(!isActiveYoutube);
-    const message = { message: false };
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      const activeTab = tabs[0];
-      if (activeTab) {
-        chrome.tabs.sendMessage(activeTab.id!, message, (response) => {
-          if (response && response.farewell) {
-            console.log(response.farewell, "response");
-          }
-        });
-      }
-    });
-  };
-
-  /////////////////////////////////
+ 
 
   return (
     <div className="popup">
       <div style={{ display: "flex", alignItems: "center", gap: "110px" }}>
         <h3>Blocks YouTube Ads</h3>
 
-        <div>
-          {isActiveYoutube ? (
-            <button onClick={tunOffAdBlc} className="ytAds-btn">
-              turn on
-            </button>
-          ) : (
-            <button onClick={turnOnAdBlc} className="ytAds-btn">
-              turn off
-            </button>
-          )}
-        </div>
+       
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: "125px" }}>
-        <h3>Blocks Twitch Ads</h3>
-        <div>
-          {isActiveTwitch ? (
-            <button className="ytAds-btn">turn on</button>
-          ) : (
-            <button className="ytAds-btn">turn off</button>
-          )}
-        </div>
-      </div>
-      <div style={{ display: "flex", alignItems: "center", gap: "130px" }}>
-        <h3>Blocks HULU Ads</h3>
-        <div>
-          {isActiveTwitch ? (
-            <button className="ytAds-btn">turn on</button>
-          ) : (
-            <button className="ytAds-btn">turn off</button>
-          )}
-        </div>
-      </div>
+     
     </div>
   );
 };
 
 const Loader = () => {
-  const [state, setState] = useState();
+  const [isActiveYoutube, setIsActiveYoutube] = useState(true);
+  const [activeClass, setActiveClass] = useState(false);
+
+    useEffect(() => {
+      const storedData = localStorage.getItem("appData");
+      if (storedData) {
+        const parsedData = JSON.parse(storedData);
+        setIsActiveYoutube(parsedData.isActiveYoutube);
+      
+      }
+    }, []);
+  
+    useEffect(() => {
+      const dataToStore = { isActiveYoutube };
+      localStorage.setItem("appData", JSON.stringify(dataToStore));
+    }, [isActiveYoutube ]);
+
+
+ //////////////////////////////////
+
+ const tunOffAdBlc = () => {
+  setIsActiveYoutube(!isActiveYoutube);
+  const message = { message: true };
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const activeTab = tabs[0];
+    if (activeTab) {
+      chrome.tabs.sendMessage(activeTab.id!, message, (response) => {
+        if (response && response.farewell) {
+          console.log(response.farewell, "response");
+        }
+      });
+    }
+  });
+};
+
+const turnOnAdBlc = () => {
+  setIsActiveYoutube(!isActiveYoutube);
+  const message = { message: false };
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    const activeTab = tabs[0];
+    if (activeTab) {
+      chrome.tabs.sendMessage(activeTab.id!, message, (response) => {
+        if (response && response.farewell) {
+          console.log(response.farewell, "response");
+        }
+      });
+    }
+  });
+};
+
+/////////////////////////////////
+
 
   return (
     <div>
-      {state ? (
-        <div className="main">
+      {isActiveYoutube ? (
+        <div className="main" onClick={tunOffAdBlc}>
           <div id="ConnectionButton" className="disconnected">
             <div className="staticOuterCircle"></div>
             <div className="staticInnerCircle"></div>
@@ -263,14 +244,14 @@ const Loader = () => {
           </div>
         </div>
       ) : (
-        <div className="main">
-        <div id="ConnectionButton" className="disconnected">
-          <div className="staticOuterCircle"></div>
-          <div className="staticInnerCircle"></div>
-          <div className="staticBackground"></div>
-          <span className="title">Connecting</span>
+        <div className="main" onClick={turnOnAdBlc}>
+          <div id="ConnectionButton" className="disconnected">
+            <div className="staticOuterCircle"></div>
+            <div className="staticInnerCircle"></div>
+            <div className="staticBackground"></div>
+            <span className="title">Connecting.....</span>
+          </div>
         </div>
-      </div>
       )}
     </div>
   );
