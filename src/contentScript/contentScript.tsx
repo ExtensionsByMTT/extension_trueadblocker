@@ -15,10 +15,10 @@ const [first, setFirst] = useState(true);
     sendResponse
   ) {
     if (request.message == true) {
-      localStorage.setItem("sw", "on");
+      localStorage.setItem("yt-state", "on");
       run();
     } else if (request.message == false) {
-      localStorage.setItem("sw", "off");
+      localStorage.setItem("yt-state", "off");
       stop();
     } else {
       return;
@@ -31,7 +31,7 @@ useEffect(()=>{
 
 
   const run = () => {
-    const swLocal = localStorage.getItem("sw");
+    const swLocal = localStorage.getItem("yt-state");
     if (swLocal === "on") {
       //   window.location.reload();
       adAdBlocker();
@@ -39,7 +39,7 @@ useEffect(()=>{
   };
 
   const stop = () => {
-    const swLocal = localStorage.getItem("sw");
+    const swLocal = localStorage.getItem("yt-state");
     if (swLocal === "off") {
       window.location.reload();
       setTimeout(() => {

@@ -5,7 +5,7 @@ import "./popup.css";
 const App: React.FC<{}> = () => {
   return (
     <>
-      <Header />
+    
 
       <Loader />
       <Toogle />
@@ -13,80 +13,7 @@ const App: React.FC<{}> = () => {
   );
 };
 
-const Header = () => {
-  const [pausePlay, setPausePlay] = useState(false);
-  return (
-    <>
-      <div className="header">
-        <div className="logo">
-          <img className="AdBlockerLogo" alt="AdBlocker" src="./ad-block.png" />
-        </div>
-        <div className="icons">
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="29"
-              height="29"
-              fill="currentColor"
-              className="bi bi-arrow-repeat"
-              viewBox="0 0 16 16"
-            >
-              <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
-              <path
-                fill-rule="evenodd"
-                d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"
-              />
-            </svg>
-          </div>
-          {/* pause Button */}
-          {!pausePlay && (
-            <div onClick={() => setPausePlay(!pausePlay)}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="29"
-                height="29"
-                fill="currentColor"
-                className="bi bi-pause-circle"
-                viewBox="0 0 16 16"
-              >
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                <path d="M5 6.25a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0v-3.5zm3.5 0a1.25 1.25 0 1 1 2.5 0v3.5a1.25 1.25 0 1 1-2.5 0v-3.5z" />
-              </svg>
-            </div>
-          )}
-          {/* play Button */}
-          {pausePlay && (
-            <div onClick={() => setPausePlay(!pausePlay)}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="29"
-                height="29"
-                fill="currentColor"
-                className="bi bi-play"
-                viewBox="0 0 16 16"
-              >
-                <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z" />
-              </svg>
-            </div>
-          )}
-          <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="29"
-              height="29"
-              fill="currentColor"
-              className="bi bi-gear"
-              viewBox="0 0 16 16"
-            >
-              <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
-              <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
-            </svg>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
+
 
 const Body = () => {
   return (
@@ -180,8 +107,8 @@ const Toogle = () => {
 
 const Loader = () => {
   const [isActiveYoutube, setIsActiveYoutube] = useState(true);
-  const [activeClass, setActiveClass] = useState(false);
 
+const [isConnecting , setisConnecting] = useState(false)
     useEffect(() => {
       const storedData = localStorage.getItem("appData");
       if (storedData) {
@@ -201,6 +128,12 @@ const Loader = () => {
 
  const tunOffAdBlc = () => {
   setIsActiveYoutube(!isActiveYoutube);
+
+  setisConnecting(true);
+  setTimeout(() => {
+    setisConnecting(false);
+    // Code to handle turning on ad blocking
+  }, 2000);
   const message = { message: true };
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const activeTab = tabs[0];
@@ -215,6 +148,7 @@ const Loader = () => {
 };
 
 const turnOnAdBlc = () => {
+
   setIsActiveYoutube(!isActiveYoutube);
   const message = { message: false };
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -235,7 +169,7 @@ const turnOnAdBlc = () => {
   return (
     <div>
       {isActiveYoutube ? (
-        <div className="main" onClick={tunOffAdBlc}>
+        <div className="main" onClick={tunOffAdBlc} >
           <div id="ConnectionButton" className="disconnected">
             <div className="staticOuterCircle"></div>
             <div className="staticInnerCircle"></div>
@@ -244,16 +178,25 @@ const turnOnAdBlc = () => {
           </div>
         </div>
       ) : (
-        <div className="main" onClick={turnOnAdBlc}>
-          <div id="ConnectionButton" className="disconnected">
+        <div className="main">
+        {isConnecting ? (
+          <div className="loading-container">
+            <div className="loading"></div>
+            <div id="loading-text">Connecting...</div>
+          </div>
+        ) : (
+          <div className="main" onClick={turnOnAdBlc}>
+          <div id="ConnectionButton" className="connected" >
             <div className="staticOuterCircle"></div>
             <div className="staticInnerCircle"></div>
             <div className="staticBackground"></div>
-            <span className="title">Connecting.....</span>
+            <span className="title">Disconnect</span>
           </div>
-        </div>
-      )}
-    </div>
+          </div>
+        )}
+      </div>
+    )}
+  </div>
   );
 };
 
