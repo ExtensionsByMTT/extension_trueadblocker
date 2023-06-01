@@ -6,6 +6,9 @@ import ReactDOM from "react-dom";
 import "./contentScript.css";
 
 const App: React.FC<{}> = () => {
+
+const [first, setFirst] = useState(true);
+
   chrome.runtime.onMessage.addListener(function (
     request,
     sender,
@@ -21,6 +24,11 @@ const App: React.FC<{}> = () => {
       return;
     }
   });
+
+useEffect(()=>{
+  adAdBlocker()
+},[])
+
 
   const run = () => {
     const swLocal = localStorage.getItem("sw");
@@ -161,6 +169,7 @@ const App: React.FC<{}> = () => {
       }
     };
     getDom();
+    otherAds();
   };
 
   const removeAdBlocker = () => {
@@ -242,8 +251,25 @@ const App: React.FC<{}> = () => {
     };
     adFunction()
   };
- 
   //////////////////YT ad //////////////////////
+
+
+
+  ////////////////////twitch.adsBlocker///////////////////////////
+  //blocking bannner ads on twitch.tv
+  useEffect(() => {
+    window.onload = function img() {
+      const aElements = document.getElementsByTagName("img");
+
+      for (const aTag of aElements) {
+        const alt = aTag.getAttribute("alt");
+        console.log(alt,"panel content")
+        if (alt === "Panel Content") {
+          aTag.style.setProperty("visibility", "hidden", "important");
+        }
+      }
+    };
+  }, [first]);
 
   return <></>;
 };

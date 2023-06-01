@@ -3,19 +3,16 @@ import ReactDOM from "react-dom";
 import "./popup.css";
 
 const App: React.FC<{}> = () => {
-
-
   return (
     <>
-    <div className="adblocker">
-  {/* <Header/> */}
-      <Toogle/>
-   {/* <Body/> */}
-    </div>
-  </>
+      <Header />
+
+      <Loader />
+      <Toogle />
+      <Body/>
+    </>
   );
 };
-
 
 const Header = () => {
   const [pausePlay, setPausePlay] = useState(false);
@@ -23,11 +20,7 @@ const Header = () => {
     <>
       <div className="header">
         <div className="logo">
-          <img
-            className="AdBlockerLogo"
-            alt="AdBlocker"
-            src="./ad-block.png"
-          />
+          <img className="AdBlockerLogo" alt="AdBlocker" src="./ad-block.png" />
         </div>
         <div className="icons">
           <div>
@@ -97,6 +90,7 @@ const Header = () => {
 };
 
 const Body = () => {
+  
   return (
     <>
       <div className="list mar">
@@ -160,31 +154,28 @@ const Body = () => {
   );
 };
 
-const Toogle=()=>{
+const Toogle = () => {
+  const [isActiveYoutube, setIsActiveYoutube] = useState(true);
+  const [isActiveTwitch, setIsActiveTwitch] = useState(false);
 
+  useEffect(() => {
+    const storedData = localStorage.getItem("appData");
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      setIsActiveYoutube(parsedData.isActiveYoutube);
+      setIsActiveTwitch(parsedData.isActiveTwitch);
+    }
+  }, []);
 
-  // const handleToggleYoutube = () => {
-  //   setIsActiveYoutube(!isActiveYoutube);
-  //   const message = { greeting: !isActiveYoutube };
-
-  //   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-  //     const activeTab = tabs[0];
-  //     if (activeTab) {
-  //       chrome.tabs.sendMessage(activeTab.id!, message, (response) => {
-  //         if (response && response.farewell) {
-  //           console.log(response.farewell, "hey");
-  //         }
-  //       });
-  //     }
-  //   });
-  // };
-
-
-
+  useEffect(() => {
+    const dataToStore = { isActiveYoutube, isActiveTwitch };
+    localStorage.setItem("appData", JSON.stringify(dataToStore));
+  }, [isActiveYoutube, isActiveTwitch]);
 
   //////////////////////////////////
 
   const tunOffAdBlc = () => {
+    setIsActiveYoutube(!isActiveYoutube);
     const message = { message: true };
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0];
@@ -199,6 +190,7 @@ const Toogle=()=>{
   };
 
   const turnOnAdBlc = () => {
+    setIsActiveYoutube(!isActiveYoutube);
     const message = { message: false };
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0];
@@ -212,35 +204,77 @@ const Toogle=()=>{
     });
   };
 
-/////////////////////////////////
+  /////////////////////////////////
 
-return(
-  <div className="popup">
-    
-       <div style={{display:"flex",alignItems:"center",gap:"46px"}}> 
-       <h3>Blocks YouTube Ads</h3>
- <input
-   type="checkbox"
-   id="youtubeSwitch"
+  return (
+    <div className="popup">
+      <div style={{ display: "flex", alignItems: "center", gap: "110px" }}>
+        <h3>Blocks YouTube Ads</h3>
 
-  //  onChange={handleToggleYoutube}
- />
- <label htmlFor="youtubeSwitch">Toggle YouTube</label>
-</div>
-     
-      <div style={{display:"flex",alignItems:"center",gap:"52px"}}>  <h3>Blocks Twitch Ads</h3>
-      <input
-        type="checkbox"
-        id="twitchSwitch"
-     
-        // onChange={handleToggleTwitch}
-      />
-      <label htmlFor="twitchSwitch">Toggle Twitch</label></div>
-     <button onClick={tunOffAdBlc}>turn on</button>
-     <button onClick={turnOnAdBlc}>turn off</button>
+        <div>
+          {isActiveYoutube ? (
+            <button onClick={tunOffAdBlc} className="ytAds-btn">
+              turn on
+            </button>
+          ) : (
+            <button onClick={turnOnAdBlc} className="ytAds-btn">
+              turn off
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div style={{ display: "flex", alignItems: "center", gap: "125px" }}>
+        <h3>Blocks Twitch Ads</h3>
+        <div>
+          {isActiveTwitch ? (
+            <button className="ytAds-btn">turn on</button>
+          ) : (
+            <button className="ytAds-btn">turn off</button>
+          )}
+        </div>
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: "130px" }}>
+        <h3>Blocks HULU Ads</h3>
+        <div>
+          {isActiveTwitch ? (
+            <button className="ytAds-btn">turn on</button>
+          ) : (
+            <button className="ytAds-btn">turn off</button>
+          )}
+        </div>
+      </div>
     </div>
-)
-}
+  );
+};
+
+const Loader = () => {
+  const [state, setState] = useState();
+
+  return (
+    <div>
+      {state ? (
+        <div className="main">
+          <div id="ConnectionButton" className="disconnected">
+            <div className="staticOuterCircle"></div>
+            <div className="staticInnerCircle"></div>
+            <div className="staticBackground"></div>
+            <span className="title">Connect</span>
+          </div>
+        </div>
+      ) : (
+        <div className="main">
+        <div id="ConnectionButton" className="disconnected">
+          <div className="staticOuterCircle"></div>
+          <div className="staticInnerCircle"></div>
+          <div className="staticBackground"></div>
+          <span className="title">Connecting</span>
+        </div>
+      </div>
+      )}
+    </div>
+  );
+};
 
 const root = document.createElement("div");
 document.body.appendChild(root);

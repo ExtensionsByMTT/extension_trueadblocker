@@ -1,12 +1,20 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap");
-body {
-  background-color:white;
-  font-family: "Inter", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  overflow-y: hidden;
-  overflow-x: hidden;
+body{
+  margin: 0;
+  width: 375px;
+  height: 600px;
+  overflow: hidden;
+  font-family: 'GothamPro', Arial, sans-serif;
+  color: #ffffff;
+  cursor: default;
+  background: #23282e;
+  user-select: none;
+  -o-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+
 }
 body::-webkit-scrollbar {
   display: none;
@@ -19,22 +27,20 @@ body::-webkit-scrollbar {
 .adblocker {
   right: 0;
   overflow-y: auto;
-  height: 450px;
-  width: 320px;
+height: 100px;
   padding: 0px;
 }
-.mar {
-  /* margin-top: 20px; */
 
-}
 .list {
-  color: black;
+  color: white;
   display: flex;
   flex-direction: column;
   justify-items: center;
   gap: 10px;
-  padding-left: 20px;
+  padding-left: 12px;
   line-height: 0;
+  position: absolute;
+  bottom: 50px;
 }
 .icon_text {
   display: flex;
@@ -94,11 +100,11 @@ h4 {
   font-size: 22px;
 }
 .header {
-  color: black;
+  color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-left: 20px;
+padding: 10px 10px 10px 10px;
   margin-bottom: -39px;
 }
 
@@ -106,7 +112,7 @@ h4 {
 .extHeading {
   line-height: 0;
   text-align: center;
-  color: black;
+  color: white;
   font-weight: 400;
   font-size: 22px;
   padding: 0 0 10px 0;
@@ -115,65 +121,217 @@ h4 {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-right: 20px;
+
 }
 .header div {
   width: 50%;
 }
 
 .popup {
-    display: flex;
-    justify-content: center;
-    align-items: start;
-    flex-direction: column;
-    height: 269px;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  flex-direction: column;
+  color: white;
+  position: absolute;
+  bottom: 40%;
+  padding: 0px 0px 0px 10px;
+  height: 75px;
   }
   
-  input[type="checkbox"] {
-    height: 0;
-    width: 0;
-    visibility: hidden;
-  }
   
-  label {
-    cursor: pointer;
-    text-indent: -9999px;
-    width: 80px;
-    height: 30px;
-    background: grey;
-    display: block;
-    border-radius: 100px;
-    position: relative;
-  }
-  
-  label:after {
-    content: "";
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    width: 20px;
-    height: 20px;
-    background: #fff;
-    border-radius: 90px;
-    transition: 0.3s;
-  }
-  
-  input:checked + label {
+  .ytAds-btn{
+    padding: 5px 30px 5px 30px;
     background: red;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
   }
   
-  input:checked + label:after {
-    left: calc(100% - 5px);
-    transform: translateX(-100%);
-  }
+
+  /* //////////////////////loader css////////////////// */
+
   
-  label:active:after {
-    width: 100px;
+.main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  height: 100px;
+  top: 120px;
+}
+#ConnectionButton {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    align-items: center;
+    justify-content: center;
+    transition: right 0.5s ease-in-out, top ease-in-out 0.5s, width ease-in-out 0.5s, height ease-in-out 0.5s;
+    display: flex;
+
+    cursor: pointer;
   }
-  
-  input:not(:checked) + label:after {
+  #ConnectionButton .staticOuterCircle,
+  #ConnectionButton .staticInnerCircle,
+  #ConnectionButton .staticBackground {
+    position: absolute;
+    transition: left 0.5s ease-in-out, top ease-in-out 0.5s, width ease-in-out 0.5s, height ease-in-out 0.5s;
+  }
+  #ConnectionButton .staticOuterCircle {
+    width: 118px;
+    height: 118px;
+    border: 1px solid;
+    border-radius: 200px;
+    left: 0;
+    top: 0;
+  }
+  #ConnectionButton .staticInnerCircle {
+    width: 110px;
+    height: 110px;
+    border: 1px solid;
+    border-radius: 105px;
+    left: 4px;
+    top: 4px;
+  }
+  #ConnectionButton .staticBackground {
+    opacity: 0.1;
+    width: 110px;
+    height: 110px;
     left: 5px;
-    transform: translateX(0);
+    top: 5px;
+    border-radius: 110px;
   }
-  
-  
+  #ConnectionButton.connected,
+  #ConnectionButton.postConnection {
+    width: 70px;
+    height: 70px;
+    right: 20px;
+    top: 10px;
+  }
+  #ConnectionButton.connected .staticOuterCircle,
+  #ConnectionButton.postConnection .staticOuterCircle {
+    width: 68px;
+    height: 68px;
+    animation: pulsing 0.7s linear 0s infinite alternate;
+  }
+  #ConnectionButton.connected .staticInnerCircle,
+  #ConnectionButton.postConnection .staticInnerCircle {
+    width: 62px;
+    height: 62px;
+    left: 3px;
+    top: 3px;
+  }
+  #ConnectionButton.connected .staticBackground,
+  #ConnectionButton.postConnection .staticBackground {
+    width: 64px;
+    height: 64px;
+    left: 4px;
+    top: 4px;
+  }
+  #ConnectionButton.connected .staticOuterCircle,
+  #ConnectionButton.postConnection .staticOuterCircle,
+  #ConnectionButton.connected .staticInnerCircle,
+  #ConnectionButton.postConnection .staticInnerCircle {
+    border-color: #40c584;
+  }
+  #ConnectionButton.connected .staticBackground,
+  #ConnectionButton.postConnection .staticBackground {
+    background: #40c584;
+  }
+  #ConnectionButton.disconnected .staticOuterCircle {
+    animation: pulsing 0.7s linear 0s infinite alternate;
+  }
+  #ConnectionButton.disconnected .staticOuterCircle,
+  #ConnectionButton.disconnected .staticInnerCircle {
+    border-color: #ffffff;
+  }
+  #ConnectionButton.disconnected .staticBackground {
+    background: #ffffff;
+  }
+  #ConnectionButton .title {
+    font-size: 14px;
+  }
+  #ConnectionButton.connecting .staticOuterCircle,
+  #ConnectionButton.disconnecting .staticOuterCircle,
+  #ConnectionButton.connecting .staticInnerCircle,
+  #ConnectionButton.disconnecting .staticInnerCircle,
+  #ConnectionButton.connecting .staticBackground,
+  #ConnectionButton.disconnecting .staticBackground {
+    opacity: 0;
+  }
+  #ConnectionButton.connecting .outer-layer,
+  #ConnectionButton.disconnecting .outer-layer,
+  #ConnectionButton.connecting .inner-layer,
+  #ConnectionButton.disconnecting .inner-layer,
+  #ConnectionButton.connecting .background-layer,
+  #ConnectionButton.disconnecting .background-layer {
+    width: 120px;
+    height: 120px;
+    position: absolute;
+  }
+  #ConnectionButton.connecting .outer-circle,
+  #ConnectionButton.disconnecting .outer-circle {
+    opacity: 0.5;
+    stroke-dasharray: 0, 1000;
+    animation: dash_outer 2.7s ease-in-out alternate infinite;
+  }
+  #ConnectionButton.connecting .inner-circle,
+  #ConnectionButton.disconnecting .inner-circle {
+    stroke-dasharray: 0, 1000;
+    animation: dash_inner 2s ease-in-out alternate infinite;
+  }
+  #ConnectionButton.connecting .outer-layer,
+  #ConnectionButton.disconnecting .outer-layer {
+    animation: rotation 1.3s infinite linear;
+  }
+  #ConnectionButton.connecting .inner-layer,
+  #ConnectionButton.disconnecting .inner-layer {
+    animation: rotation 1s infinite linear;
+  }
+  #ConnectionButton.connecting .outer-circle,
+  #ConnectionButton.disconnecting .outer-circle,
+  #ConnectionButton.connecting .inner-circle,
+  #ConnectionButton.disconnecting .inner-circle {
+    stroke: #007aff;
+  }
+  #ConnectionButton.connecting .background-circle,
+  #ConnectionButton.disconnecting .background-circle {
+    opacity: 0.1;
+    fill: #007aff;
+  }
+  @keyframes pulsing {
+    from {
+      opacity: 0.9;
+      transform: scale(1, 1);
+    }
+    to {
+      transform: scale(1.03, 1.03);
+      opacity: 0.5;
+    }
+  }
+  @keyframes dash_outer {
+    from {
+      stroke-dasharray: 0, 1000;
+    }
+    to {
+      stroke-dasharray: 377, 1000;
+    }
+  }
+  @keyframes dash_inner {
+    from {
+      stroke-dasharray: 0, 1000;
+    }
+    to {
+      stroke-dasharray: 345, 1000;
+    }
+  }
+  @keyframes rotation {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(359deg);
+    }
+  }
