@@ -8,102 +8,143 @@ const App: React.FC<{}> = () => {
     
 
       <Loader />
-      <Toogle />
+   
     </>
   );
 };
 
 
 
-const Body = () => {
+
+
+
+/////////////////////////animatedcircel///////////////////////////
+
+
+
+
+const AnimatedCircle = () => {
   return (
     <>
-      <div className="list mar">
-        <div className="icon_text">
-          <div className="svgs">
+      <h3 className="extHeading">Your are safe from pop-ads</h3>
+      <h3 className="extHeading">Keep Browsering </h3>
+      <section className="main-container">
+        <div className="animated-main ">
+          <div className="big-circle">
+            <div className="icon-block">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-gear-wide-connected"
+                viewBox="0 0 16 16"
+              >
+                <path d="M7.068.727c.243-.97 1.62-.97 1.864 0l.071.286a.96.96 0 0 0 1.622.434l.205-.211c.695-.719 1.888-.03 1.613.931l-.08.284a.96.96 0 0 0 1.187 1.187l.283-.081c.96-.275 1.65.918.931 1.613l-.211.205a.96.96 0 0 0 .434 1.622l.286.071c.97.243.97 1.62 0 1.864l-.286.071a.96.96 0 0 0-.434 1.622l.211.205c.719.695.03 1.888-.931 1.613l-.284-.08a.96.96 0 0 0-1.187 1.187l.081.283c.275.96-.918 1.65-1.613.931l-.205-.211a.96.96 0 0 0-1.622.434l-.071.286c-.243.97-1.62.97-1.864 0l-.071-.286a.96.96 0 0 0-1.622-.434l-.205.211c-.695.719-1.888.03-1.613-.931l.08-.284a.96.96 0 0 0-1.186-1.187l-.284.081c-.96.275-1.65-.918-.931-1.613l.211-.205a.96.96 0 0 0-.434-1.622l-.286-.071c-.97-.243-.97-1.62 0-1.864l.286-.071a.96.96 0 0 0 .434-1.622l-.211-.205c-.719-.695-.03-1.888.931-1.613l.284.08a.96.96 0 0 0 1.187-1.186l-.081-.284c-.275-.96.918-1.65 1.613-.931l.205.211a.96.96 0 0 0 1.622-.434l.071-.286zM12.973 8.5H8.25l-2.834 3.779A4.998 4.998 0 0 0 12.973 8.5zm0-1a4.998 4.998 0 0 0-7.557-3.779l2.834 3.78h4.723zM5.048 3.967c-.03.021-.058.043-.087.065l.087-.065zm-.431.355A4.984 4.984 0 0 0 3.002 8c0 1.455.622 2.765 1.615 3.678L7.375 8 4.617 4.322zm.344 7.646.087.065-.087-.065z" />
+              </svg>
+            </div>
+            <div className="icon-block">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-file-lock"
+                viewBox="0 0 16 16"
+              >
+                <path d="M8 5a1 1 0 0 1 1 1v1H7V6a1 1 0 0 1 1-1zm2 2.076V6a2 2 0 1 0-4 0v1.076c-.54.166-1 .597-1 1.224v2.4c0 .816.781 1.3 1.5 1.3h3c.719 0 1.5-.484 1.5-1.3V8.3c0-.627-.46-1.058-1-1.224zM6.105 8.125A.637.637 0 0 1 6.5 8h3a.64.64 0 0 1 .395.125c.085.068.105.133.105.175v2.4c0 .042-.02.107-.105.175A.637.637 0 0 1 9.5 11h-3a.637.637 0 0 1-.395-.125C6.02 10.807 6 10.742 6 10.7V8.3c0-.042.02-.107.105-.175z" />
+                <path d="M4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4zm0 1h8a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z" />
+              </svg>
+            </div>
+            <div className="icon-block">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-pc"
+                viewBox="0 0 16 16"
+              >
+                <path d="M5 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1H5Zm.5 14a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1Zm2 0a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1ZM5 1.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5ZM5.5 3h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1Z" />
+              </svg>
+            </div>
+            <div className="icon-block">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-key"
+                viewBox="0 0 16 16"
+              >
+                <path d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z" />
+                <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+              </svg>
+            </div>
+          </div>
+          <div className="circle">
+            <div className="icon-block">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-pc-display-horizontal"
+                viewBox="0 0 16 16"
+              >
+                <path d="M1.5 0A1.5 1.5 0 0 0 0 1.5v7A1.5 1.5 0 0 0 1.5 10H6v1H1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-5v-1h4.5A1.5 1.5 0 0 0 16 8.5v-7A1.5 1.5 0 0 0 14.5 0h-13Zm0 1h13a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .5-.5ZM12 12.5a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0Zm2 0a.5.5 0 1 1 1 0 .5.5 0 0 1-1 0ZM1.5 12h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1ZM1 14.25a.25.25 0 0 1 .25-.25h5.5a.25.25 0 1 1 0 .5h-5.5a.25.25 0 0 1-.25-.25Z" />
+              </svg>
+            </div>
+            <div className="icon-block">
+              <img
+                src="https://ucarecdn.com/2323ebfc-5b14-47ae-959a-191e82d0103a/blockchainicon.png"
+                alt="blockchain icon"
+              />
+            </div>
+            <div className="icon-block">
+              <img
+                src="https://ucarecdn.com/5e4802ac-8684-41f3-8657-1e0834d07abe/arvricon.png"
+                alt="ar-vr icon"
+              />
+            </div>
+            <div className="icon-block">
+              <img
+                src="https://ucarecdn.com/61a82adc-7eef-4e50-a7d5-8e11ef76ff31/artificialintelligenceicon.png"
+                alt="artificial intelligence icon"
+              />
+            </div>
+          </div>
+          <div className="center-logo">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              width="16"
+              height="16"
               fill="currentColor"
-              className="bi bi-tv"
-              viewBox="0 0 16 16"
-            >
-              <path d="M2.5 13.5A.5.5 0 0 1 3 13h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zM13.991 3l.024.001a1.46 1.46 0 0 1 .538.143.757.757 0 0 1 .302.254c.067.1.145.277.145.602v5.991l-.001.024a1.464 1.464 0 0 1-.143.538.758.758 0 0 1-.254.302c-.1.067-.277.145-.602.145H2.009l-.024-.001a1.464 1.464 0 0 1-.538-.143.758.758 0 0 1-.302-.254C1.078 10.502 1 10.325 1 10V4.009l.001-.024a1.46 1.46 0 0 1 .143-.538.758.758 0 0 1 .254-.302C1.498 3.078 1.675 3 2 3h11.991zM14 2H2C0 2 0 4 0 4v6c0 2 2 2 2 2h12c2 0 2-2 2-2V4c0-2-2-2-2-2z" />
-            </svg>
-          </div>
-          <div className="text">
-            <p>Block ads on the site</p>
-          </div>
-        </div>
-        <div className="icon_text ">
-          <div className="svgs">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="currentColor"
-              className="bi bi-list"
+              className="bi bi-shield-fill-plus"
               viewBox="0 0 16 16"
             >
               <path
                 fill-rule="evenodd"
-                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+                d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm-.5 5a.5.5 0 0 1 1 0v1.5H10a.5.5 0 0 1 0 1H8.5V9a.5.5 0 0 1-1 0V7.5H6a.5.5 0 0 1 0-1h1.5V5z"
               />
             </svg>
           </div>
-          <div className="text">
-            <p>Open the filtering log</p>
-          </div>
         </div>
-        <div className="icon_text ">
-          <div className="svgs">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="currentColor"
-              className="bi bi-shield-exclamation"
-              viewBox="0 0 16 16"
-            >
-              <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z" />
-              <path d="M7.001 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.553.553 0 0 1-1.1 0L7.1 4.995z" />
-            </svg>
-          </div>
-          <div className="text">
-            <p>Check website security</p>
-          </div>
-        </div>
-      </div>
+      </section>
     </>
   );
 };
 
-const Toogle = () => {
-  const [isActiveYoutube, setIsActiveYoutube] = useState(true);
- console.log(isActiveYoutube)
-  useEffect(()=>{
-   const state= localStorage.getItem("appData");
-   
-   setIsActiveYoutube(JSON.parse(state));
-  },[])
-
-
-
- 
-
-  return (
-    <div className="popup">
-      <div style={{ display: "flex", alignItems: "center", gap: "110px" }}>
-        <h3>Blocks YouTube Ads</h3>
-
-       
-      </div>
-
-     
+const Header=()=>{
+  return(
+    <div className="header">
+      <div><h1>TrueAdBlocker</h1></div>
+<div><img src="./ad-block.png" alt="" height="100px"/></div>
+  
     </div>
-  );
-};
+  )
+}
+
 
 const Loader = () => {
   const [isActiveYoutube, setIsActiveYoutube] = useState(true);
@@ -166,37 +207,71 @@ const turnOnAdBlc = () => {
 /////////////////////////////////
 
 
+
+
+
+
   return (
     <div>
+      
       {isActiveYoutube ? (
-        <div className="main" onClick={tunOffAdBlc} >
+      <>
+        <Header/>
+        <div className="main" onClick={tunOffAdBlc}>
           <div id="ConnectionButton" className="disconnected">
             <div className="staticOuterCircle"></div>
             <div className="staticInnerCircle"></div>
             <div className="staticBackground"></div>
             <span className="title">Connect</span>
           </div>
-        </div>
+        </div></>
       ) : (
         <div className="main">
-        {isConnecting ? (
-          <div className="loading-container">
-            <div className="loading"></div>
-            <div id="loading-text">Connecting...</div>
-          </div>
-        ) : (
-          <div className="main" onClick={turnOnAdBlc}>
-          <div id="ConnectionButton" className="connected" >
-            <div className="staticOuterCircle"></div>
-            <div className="staticInnerCircle"></div>
-            <div className="staticBackground"></div>
-            <span className="title">Disconnect</span>
-          </div>
-          </div>
-        )}
+          {isConnecting ? (
+            <div className="loading-container">
+              <div className="loading"></div>
+              <div id="loading-text">Connecting...</div>
+            </div>
+          ) : (
+            <>
+            
+      <div className="main-dis">
+      <div className="main-disconnect">
+             
+             
+             <div
+               id="ConnectionButton"
+               className="connected"
+               onClick={turnOnAdBlc}
+             >
+               <div className="staticOuterCircle"></div>
+               <div className="staticInnerCircle"></div>
+               <div className="staticBackground"></div>
+               <span className="title">Stop</span>
+             </div>
+           </div>
+      
+           <div className="features">
+           <AnimatedCircle/>
+             <div className="youtube">
+               <h4>YouTube</h4>
+               <span><img src="./youtube.png"></img> </span>
+             </div>
+             <div className="twitch">
+               <h4>Twitch</h4>
+               <span><img src="./twitch.png"></img> </span>
+             </div>
+             <div className="twitch">
+               <h4>malicious ads</h4>
+               <span><img src="./malicious.png"></img> </span>
+             </div>
+           </div>
       </div>
-    )}
-  </div>
+            </>
+          )}
+        </div>
+      )}
+    </div>
   );
 };
 

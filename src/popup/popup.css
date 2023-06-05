@@ -1,11 +1,12 @@
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Raleway&family=Roboto:wght@300&display=swap');
+
 body{
   margin: 0;
   width: 375px;
   height: 600px;
   overflow: hidden;
-  font-family: 'GothamPro', Arial, sans-serif;
+  font-family: 'Raleway', sans-serif;
   color: #ffffff;
   cursor: default;
   background: #23282e;
@@ -98,14 +99,7 @@ h4 {
   font-weight: 400;
   font-size: 22px;
 }
-.header {
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-padding: 10px 10px 10px 10px;
-  margin-bottom: -39px;
-}
+
 
 /* animated cirlce styles */
 .extHeading {
@@ -122,8 +116,13 @@ padding: 10px 10px 10px 10px;
   gap: 10px;
 
 }
-.header div {
-  width: 50%;
+.header{
+  height: 100px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+  box-shadow: 0 1px 10px white;
+  padding: 0px 10px 0px 10px;
 }
 
 .popup {
@@ -158,8 +157,16 @@ padding: 10px 10px 10px 10px;
   align-items: center;
   position: fixed;
   width: 100%;
-  height: 100px;
-  top: 120px;
+  top: 258px;
+ 
+}
+.main-disconnect{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    box-shadow: 0 5px 10px #000;
+    top: 12px;
 }
 #ConnectionButton {
     position: absolute;
@@ -169,7 +176,8 @@ padding: 10px 10px 10px 10px;
     justify-content: center;
     transition: right 0.5s ease-in-out, top ease-in-out 0.5s, width ease-in-out 0.5s, height ease-in-out 0.5s;
     display: flex;
-
+    top: 0;
+    right: 127px;
     cursor: pointer;
   }
   #ConnectionButton .staticOuterCircle,
@@ -202,17 +210,23 @@ padding: 10px 10px 10px 10px;
     top: 5px;
     border-radius: 110px;
   }
-
+  #ConnectionButton.connected,
+  #ConnectionButton.postConnection {
+    width: 70px;
+    height: 70px;
+    right: 20px;
+    top: 11%;
+  }
   #ConnectionButton.connected .staticOuterCircle,
   #ConnectionButton.postConnection .staticOuterCircle {
-    width: 118px;
-    height: 118px;
+    width: 68px;
+    height: 68px;
     animation: pulsing 0.7s linear 0s infinite alternate;
   }
   #ConnectionButton.connected .staticInnerCircle,
   #ConnectionButton.postConnection .staticInnerCircle {
-    width: 111px;
-    height: 111px;
+    width: 62px;
+    height: 62px;
     left: 3px;
     top: 3px;
   }
@@ -238,15 +252,11 @@ padding: 10px 10px 10px 10px;
   }
   #ConnectionButton.disconnected .staticOuterCircle,
   #ConnectionButton.disconnected .staticInnerCircle {
-    border-color: #ffffff;
+    border-color: white;
   }
   #ConnectionButton.disconnected .staticBackground {
-    background: #ffffff;
+    background: white;
   }
-  /* /////////////////////////////////// */
-
-
-
   #ConnectionButton .title {
     font-size: 14px;
   }
@@ -336,7 +346,6 @@ padding: 10px 10px 10px 10px;
 
 
 
-
   /* /////////////////////connecting/////////////////////////// */
 
   @keyframes rotate-loading {
@@ -415,7 +424,7 @@ padding: 10px 10px 10px 10px;
         }
     
     
-        .loading-container { margin: 40px auto }
+
     
         .loading {
             border: 2px solid transparent;
@@ -448,7 +457,7 @@ padding: 10px 10px 10px 10px;
             -webkit-animation: loading-text-opacity 2s linear 0s infinite normal;
             animation: loading-text-opacity 2s linear 0s infinite normal;
             color: #ffffff;
-            font-family: "Helvetica Neue, "Helvetica", ""arial";
+         
             font-size: 10px;
             font-weight: bold;
             margin-top: 45px;
@@ -459,3 +468,272 @@ padding: 10px 10px 10px 10px;
             top: 0;
             width: 100px;
         }
+
+
+        .main-dis{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: fixed;
+          width: 100%;
+        top: 0px !important;
+        }
+
+/*//////////////disconnect features////////////// */
+
+
+.features{
+  width: 100%;
+  padding: 0px 20px 0px 20px;
+animation: fade-in 1s ease-in ;
+}
+
+@keyframes fade-in{
+  from{
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+
+.features h4{
+  font-size: 14px !important;
+}
+
+
+.youtube,.twitch{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.youtube span img{
+  height: 30px;
+  width: 30px;
+}
+.twitch span img{
+  height: 30px;
+  width: 30px;
+}
+
+
+
+
+
+
+
+
+
+/* animated cirlce styles */
+.extHeading {
+  line-height: 0;
+  text-align: center;
+  color: white;
+  font-weight: 400;
+  font-size: 17px;
+  padding: 0px 120px 0px 0;
+  margin-top: 32px;
+}
+
+.main-container {
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  height: 300px;
+  overflow: hidden;
+  padding-top: 40px;
+}
+.animated-main {
+  margin: 0px auto;
+  width: 200px;
+  height: 200px;
+  position: relative;
+ 
+
+}
+.big-circle {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  border: 3px solid #efa73b;
+  border-radius: 50%;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+  animation: Rotate 20s linear infinite;
+  -webkit-animation: Rotate 20s linear infinite;
+}
+.icon-block {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  border-radius: 50%;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+  background-image: linear-gradient(180deg, #efa73b 0%, #efa73b 100%);
+  -webkit-background-image: linear-gradient(180deg, #efa73b 0%, #efa73b 100%);
+  /* box-shadow: 0 2px 4px 0 #efa73b; */
+  /* -webkit-box-shadow: 0 2px 4px 0 #efa73b; */
+}
+.icon-block img {
+  margin: 0px auto;
+  width: 86%;
+  animation: Rotate-reverse 20s linear infinite;
+  -webkit-animation: Rotate-reverse 20s linear infinite;
+}
+.icon-block:first-child {
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+.icon-block:nth-child(2) {
+  top: 50%;
+  right: 0;
+  transform: translate(50%, -50%);
+  -webkit-transform: translate(50%, -50%);
+}
+.icon-block:nth-child(3) {
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  -webkit-transform: translate(-50%, 50%);
+}
+.icon-block:nth-child(4) {
+  top: 50%;
+  left: 0;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+
+
+
+
+
+/* circle content */
+.circle {
+  animation: circle-rotate 20s linear infinite;
+  -webkit-animation: circle-rotate 20s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  -webkit-transform: translate(-50%, -50%) rotate(45deg);
+  width: 75%;
+  height: 75%;
+  border: 3px solid #efa73b;
+  border-radius: 50%;
+}
+.circle .icon-block img {
+  animation: img-rotate 20s linear infinite;
+  -webkit-animation: img-rotate 20s linear infinite;
+}
+/* center logo */
+.center-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+.center-logo img {
+  max-width: 200px;
+}
+
+.bi-shield-fill-plus {
+  height: 50px;
+  width: 50px;
+  color: #efa73b;
+}
+.bi-pc,
+.bi-pc-display-horizontal,
+.bi-key,
+.bi-file-lock,
+.bi-gear-wide-connected {
+  color: white;
+}
+
+/* keyframe animation */
+
+@keyframes Rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@-webkit-keyframes Rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes Rotate-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@-webkit-keyframes Rotate-reverse {
+  from {
+    -webkit-transform: rotate(360deg);
+  }
+  to {
+    -webkit-transform: rotate(0deg);
+  }
+}
+
+@keyframes circle-rotate {
+  from {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(405deg);
+  }
+}
+
+@-webkit-keyframes circle-rotate {
+  from {
+    -webkit-transform: translate(-50%, -50%) rotate(45deg);
+  }
+  to {
+    -webkit-transform: translate(-50%, -50%) rotate(405deg);
+  }
+}
+
+@keyframes img-rotate {
+  from {
+    transform: rotate(-45deg);
+  }
+  to {
+    transform: rotate(-405deg);
+  }
+}
+
+@-webkit-keyframes img-rotate {
+  from {
+    -webkit-transform: rotate(-45deg);
+  }
+  to {
+    -webkit-transform: rotate(-405deg);
+  }
+}

@@ -9,26 +9,17 @@ const App: React.FC<{}> = () => {
 
 const [first, setFirst] = useState(true);
 
-  chrome.runtime.onMessage.addListener(function (
-    request,
-    sender,
-    sendResponse
-  ) {
-    if (request.message == true) {
-      localStorage.setItem("yt-state", "on");
-      run();
-    } else if (request.message == false) {
-      localStorage.setItem("yt-state", "off");
-      stop();
-    } else {
-      return;
-    }
-  });
-
-useEffect(()=>{
-  adAdBlocker()
-},[])
-
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.message == true) {
+    localStorage.setItem("yt-state", "on");
+    run();
+  } else if (request.message == false) {
+    localStorage.setItem("yt-state", "off");
+    stop();
+  } else {
+    return;
+  }
+});
 
   const run = () => {
     const swLocal = localStorage.getItem("yt-state");
@@ -51,9 +42,9 @@ useEffect(()=>{
   //////////////////YT ad //////////////////////
   //blocking unwanted ads from some popular websites
   const adAdBlocker = () => {
- 
+   
     function otherAds() {
-
+     
       const divs = document.getElementsByTagName("div");
       for (const div of divs) {
         // console.log("filter function loop is running");
@@ -87,6 +78,7 @@ useEffect(()=>{
 
     // get the YT Dom
     function getDom() {
+   
       const targetNode =
         document.getElementById("movie_player") || document.body;
       selfObserver(targetNode);
@@ -109,6 +101,8 @@ useEffect(()=>{
     };
 
     const adFunction = () => {
+ 
+   
       const mainDocument = document.getElementsByClassName(
         "video-ads ytp-ad-module"
       );
@@ -141,7 +135,9 @@ useEffect(()=>{
 
       if (mainDocument.length > 0) {
         handleSkipBtn();
+       
         if (playerOverlay.length > 0) {
+       
           (playerOverlay[0] as HTMLElement).style.visibility = "hidden";
           for (let i = 0; i < videoDocument.length; i++) {
             if (
@@ -153,6 +149,7 @@ useEffect(()=>{
               ).duration;
             }
           }
+        
           handleSkipBtn();
         }
         if (imageOverlay.length > 0) {
@@ -263,7 +260,6 @@ useEffect(()=>{
 
       for (const aTag of aElements) {
         const alt = aTag.getAttribute("alt");
-        console.log(alt,"panel content")
         if (alt === "Panel Content") {
           aTag.style.setProperty("visibility", "hidden", "important");
         }
