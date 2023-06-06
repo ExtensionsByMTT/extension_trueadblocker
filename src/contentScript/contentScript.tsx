@@ -21,6 +21,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 });
 
+
+
   const run = () => {
     const swLocal = localStorage.getItem("yt-state");
     if (swLocal === "on") {
@@ -165,6 +167,21 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         (textOverlay[0] as HTMLElement).style.display = "none";
       }
     };
+
+      //blocking bannner ads on twitch.tv
+
+  window.onload = function img() {
+    const aElements = document.getElementsByTagName("img");
+
+    for (const aTag of aElements) {
+      const alt = aTag.getAttribute("alt");
+      if (alt === "Panel Content") {
+        aTag.style.setProperty("visibility", "hidden", "important");
+      }
+    }
+  };
+
+
     getDom();
     otherAds();
   };
@@ -253,19 +270,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 
   ////////////////////twitch.adsBlocker///////////////////////////
-  //blocking bannner ads on twitch.tv
-  useEffect(() => {
-    window.onload = function img() {
-      const aElements = document.getElementsByTagName("img");
 
-      for (const aTag of aElements) {
-        const alt = aTag.getAttribute("alt");
-        if (alt === "Panel Content") {
-          aTag.style.setProperty("visibility", "hidden", "important");
-        }
-      }
-    };
-  }, [first]);
 
   return <></>;
 };

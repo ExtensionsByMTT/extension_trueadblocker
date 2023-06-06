@@ -1,17 +1,17 @@
 {
-  "name": "React Extension",
-  "description": "This is  React Extension.",
+  "name": "TrueAdBlocker",
+  "description": "TrueAdBlocker",
   "version": "1.0.0",
   "manifest_version": 3,
   "icons": {
-    "16": "icon.png",
-    "48": "icon.png",
-    "128": "icon.png"
+    "16": "TrueAdBlocker16x16.png",
+    "48": "TrueAdBlocker48x48.png",
+    "128": "TrueAdBlocker128x128.png"
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "React Extension",
-    "default_icon": "icon.png"
+    "default_title": "TrueAdBlocker",
+    "default_icon": "TrueAdBlocker16x16.png"
   },
   "permissions": ["declarativeNetRequest"],
   "declarative_net_request": {

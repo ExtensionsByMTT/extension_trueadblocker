@@ -4,7 +4,7 @@
 body{
   margin: 0;
   width: 375px;
-  height: 600px;
+  height: 580px;
   overflow: hidden;
   font-family: 'Raleway', sans-serif;
   color: #ffffff;
@@ -107,7 +107,6 @@ h4 {
   text-align: center;
   color: white;
   font-weight: 400;
-  font-size: 22px;
   padding: 0 0 10px 0;
 }
 .icons {
@@ -121,7 +120,7 @@ h4 {
 display: flex;
 justify-content: space-between;
 align-items: center;
-  box-shadow: 0 1px 10px white;
+  /* box-shadow: 0 1px 10px white; */
   padding: 0px 10px 0px 10px;
 }
 
@@ -161,6 +160,7 @@ align-items: center;
  
 }
 .main-disconnect{
+ 
     display: flex;
     align-items: center;
     position: absolute;
@@ -252,10 +252,10 @@ align-items: center;
   }
   #ConnectionButton.disconnected .staticOuterCircle,
   #ConnectionButton.disconnected .staticInnerCircle {
-    border-color: white;
+    border-color: red;
   }
   #ConnectionButton.disconnected .staticBackground {
-    background: white;
+    background: red;
   }
   #ConnectionButton .title {
     font-size: 14px;
@@ -470,6 +470,9 @@ align-items: center;
         }
 
 
+ 
+        
+
         .main-dis{
           display: flex;
           justify-content: center;
@@ -477,15 +480,31 @@ align-items: center;
           position: fixed;
           width: 100%;
         top: 0px !important;
+        background-color: #63d471;
+        background-image: linear-gradient(360deg, #79d383 0%, #404b44 65%);
+        height: 100%;
         }
+
+.main-connecting{
+  display: flex;
+          justify-content: center;
+          align-items: center;
+          position: fixed;
+          width: 100%;
+        top: 0px !important;
+        background-image: linear-gradient(360deg, #79d383 0%, #404b44 74%);
+    
+        height: 100%;
+}
 
 /*//////////////disconnect features////////////// */
 
 
 .features{
   width: 100%;
-  padding: 0px 20px 0px 20px;
-animation: fade-in 1s ease-in ;
+  height: 100%;
+ 
+animation: fade-in 1.5s ease-in ;
 }
 
 @keyframes fade-in{
@@ -534,8 +553,8 @@ animation: fade-in 1s ease-in ;
   color: white;
   font-weight: 400;
   font-size: 17px;
-  padding: 0px 120px 0px 0;
-  margin-top: 32px;
+
+
 }
 
 .main-container {
@@ -543,9 +562,8 @@ animation: fade-in 1s ease-in ;
   display: -webkit-flex;
   align-items: center;
   -webkit-align-items: center;
-  height: 300px;
   overflow: hidden;
-  padding-top: 40px;
+padding: 35px 0px 35px 0px;
 }
 .animated-main {
   margin: 0px auto;

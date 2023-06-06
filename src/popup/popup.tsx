@@ -20,14 +20,11 @@ const App: React.FC<{}> = () => {
 
 /////////////////////////animatedcircel///////////////////////////
 
-
-
-
 const AnimatedCircle = () => {
   return (
     <>
-      <h3 className="extHeading">Your are safe from pop-ads</h3>
-      <h3 className="extHeading">Keep Browsering </h3>
+     <Header/>
+    
       <section className="main-container">
         <div className="animated-main ">
           <div className="big-circle">
@@ -130,17 +127,24 @@ const AnimatedCircle = () => {
             </svg>
           </div>
         </div>
+        
       </section>
+      <div style={{marginTop:"25px"}}><h3 className="extHeading" style={{fontSize: "15px"}}>Your are safe from Youtube,Twitch,And Malicious ads</h3>
+      <h3 className="extHeading">Keep Browsing </h3></div>
     </>
   );
 };
 
-const Header=()=>{
+
+
+
+
+const Header=(props)=>{
   return(
     <div className="header">
-      <div><h1>TrueAdBlocker</h1></div>
-<div><img src="./ad-block.png" alt="" height="100px"/></div>
-  
+      
+<div><img src="./TrueAdBlocker128x128.png" alt="" height="80px"/></div>
+<div><h1>{props.title}</h1></div>
     </div>
   )
 }
@@ -216,9 +220,12 @@ const turnOnAdBlc = () => {
       
       {isActiveYoutube ? (
       <>
-        <Header/>
+        <Header title="TrueAdBlocker"/>
+        <div style={{marginTop:"45px"}}><h3 className="extHeading" style={{fontSize: "25px"}}>Connect to Block Ads On</h3>
+      <h2 className="extHeading">Youtube,Twitch,And Malicious ads </h2></div>
         <div className="main" onClick={tunOffAdBlc}>
           <div id="ConnectionButton" className="disconnected">
+            
             <div className="staticOuterCircle"></div>
             <div className="staticInnerCircle"></div>
             <div className="staticBackground"></div>
@@ -226,11 +233,13 @@ const turnOnAdBlc = () => {
           </div>
         </div></>
       ) : (
-        <div className="main">
+        <div className="main-connecting">
           {isConnecting ? (
-            <div className="loading-container">
+            
+              <div className="loading-container">
               <div className="loading"></div>
               <div id="loading-text">Connecting...</div>
+          
             </div>
           ) : (
             <>
@@ -253,7 +262,7 @@ const turnOnAdBlc = () => {
       
            <div className="features">
            <AnimatedCircle/>
-             <div className="youtube">
+      <div style={{padding:"0px 10px 0px 10px"}}>       <div className="youtube">
                <h4>YouTube</h4>
                <span><img src="./youtube.png"></img> </span>
              </div>
@@ -264,7 +273,7 @@ const turnOnAdBlc = () => {
              <div className="twitch">
                <h4>malicious ads</h4>
                <span><img src="./malicious.png"></img> </span>
-             </div>
+             </div></div>
            </div>
       </div>
             </>
