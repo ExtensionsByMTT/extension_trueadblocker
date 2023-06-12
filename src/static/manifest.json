@@ -13,7 +13,7 @@
     "default_title": "TrueAdBlocker",
     "default_icon": "TrueAdBlocker16x16.png"
   },
-  "permissions": ["declarativeNetRequest"],
+  "permissions": ["declarativeNetRequest","storage"],
   "declarative_net_request": {
     "rule_resources": [
       {

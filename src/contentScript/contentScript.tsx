@@ -7,12 +7,28 @@ import "./contentScript.css";
 
 const App: React.FC<{}> = () => {
 
-const [first, setFirst] = useState(true);
+const [first, setFirst] = useState(false);
+
+chrome.storage.local.set({ key: "value" }, () => {
+  console.log("Value is set");
+});
+
+chrome.storage.local.get(["key"], (result) => {
+if(result){
+  setFirst(true)
+}
+});
+
+
+
+
+
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.message == true) {
     localStorage.setItem("yt-state", "on");
     run();
+
   } else if (request.message == false) {
     localStorage.setItem("yt-state", "off");
     stop();
@@ -22,7 +38,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 
-
+useEffect(()=>{
+adAdBlocker()
+},[])
   const run = () => {
     const swLocal = localStorage.getItem("yt-state");
     if (swLocal === "on") {
@@ -74,6 +92,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             "style-scope ytd-rich-grid-row"
           )[0] as HTMLElement;
           richGridRow.style.display = "none";
+        }if(document.getElementsByClassName("style-scope ytd-promoted-sparkles-web-renderer")[0] !== undefined){
+          const ytdPromoted=document.getElementsByClassName("style-scope ytd-promoted-sparkles-web-renderer")[0] as HTMLElement;
+          ytdPromoted.style.display="none"
         }
       }
     }
@@ -86,8 +107,10 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       selfObserver(targetNode);
     }
 
-    //running blocker according to toogle
 
+
+
+// selfObserver for ytADS///
     const selfObserver = (documentNode: HTMLElement) => {
       const observer = new MutationObserver(() => {
         adFunction();
@@ -102,6 +125,31 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       observer.observe(documentNode, config);
     };
 
+
+    function getDomOfHulu() {
+   
+      const targetNode =
+        document.getElementById("content-video-player") || document.body;
+      selfObserverHulu(targetNode);
+    }
+// selfObserver for Hulu///
+    const selfObserverHulu = (documentNode: HTMLElement) => {
+      const observer = new MutationObserver(() => {
+      });
+
+      const config = {
+        subtree: true,
+        childList: true,
+      };
+
+      // Start observing
+      observer.observe(documentNode, config);
+    };
+////////////////////observer for HULU Ads//////////////////
+
+
+
+getDomOfHulu()
     const adFunction = () => {
  
    
