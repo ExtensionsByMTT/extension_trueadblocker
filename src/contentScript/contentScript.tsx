@@ -7,31 +7,18 @@ import "./contentScript.css";
 
 const App: React.FC<{}> = () => {
 
-const [first, setFirst] = useState(false);
-
-chrome.storage.local.set({ key: "value" }, () => {
-  console.log("Value is set");
-});
-
-chrome.storage.local.get(["key"], (result) => {
-if(result){
-  setFirst(true)
-}
-});
-
-
-
-
-
-
+  const [first, setFirst] = useState();
+console.log(first,"first")
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.message == true) {
-    localStorage.setItem("yt-state", "on");
-    run();
+    chrome.storage.local.set({ key: "true" }, () => {
+      console.log("Value is set true");
+    });
 
   } else if (request.message == false) {
-    localStorage.setItem("yt-state", "off");
-    stop();
+    chrome.storage.local.set({ key: "false" }, () => {
+      console.log("Value is set to false");
+    });
   } else {
     return;
   }
@@ -39,30 +26,19 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
 
 useEffect(()=>{
-adAdBlocker()
-},[])
-  const run = () => {
-    const swLocal = localStorage.getItem("yt-state");
-    if (swLocal === "on") {
-      //   window.location.reload();
-      adAdBlocker();
+  chrome.storage.local.get(["key"], (result) => {
+    if (result && result.key) {
+      setFirst(result.key);
     }
-  };
+  });
+},[first])
 
-  const stop = () => {
-    const swLocal = localStorage.getItem("yt-state");
-    if (swLocal === "off") {
-      window.location.reload();
-      setTimeout(() => {
-        removeAdBlocker();
-      }, 2000);
-    }
-  };
+
 
   //////////////////YT ad //////////////////////
   //blocking unwanted ads from some popular websites
   const adAdBlocker = () => {
-   
+   console.log("gdfjsgfs")
     function otherAds() {
      
       const divs = document.getElementsByTagName("div");
@@ -126,30 +102,7 @@ adAdBlocker()
     };
 
 
-    function getDomOfHulu() {
    
-      const targetNode =
-        document.getElementById("content-video-player") || document.body;
-      selfObserverHulu(targetNode);
-    }
-// selfObserver for Hulu///
-    const selfObserverHulu = (documentNode: HTMLElement) => {
-      const observer = new MutationObserver(() => {
-      });
-
-      const config = {
-        subtree: true,
-        childList: true,
-      };
-
-      // Start observing
-      observer.observe(documentNode, config);
-    };
-////////////////////observer for HULU Ads//////////////////
-
-
-
-getDomOfHulu()
     const adFunction = () => {
  
    
@@ -235,6 +188,7 @@ getDomOfHulu()
   };
 
   const removeAdBlocker = () => {
+    console.log("ajajajajaja");
     const adFunction = () => {
       const mainDocument = document.getElementsByClassName(
         "video-ads ytp-ad-module"
@@ -313,13 +267,20 @@ getDomOfHulu()
     };
     adFunction()
   };
+
+
+  useEffect(()=>{
+    if(first === "true"){
+      adAdBlocker()
+    }else if(first === "false"){
+     removeAdBlocker()
+    }
+  },[first])
+  
+
+
+
   //////////////////YT ad //////////////////////
-
-
-
-  ////////////////////twitch.adsBlocker///////////////////////////
-
-
   return <></>;
 };
 
