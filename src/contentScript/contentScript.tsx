@@ -7,38 +7,37 @@ import "./contentScript.css";
 
 const App: React.FC<{}> = () => {
 
-  const [first, setFirst] = useState();
-console.log(first,"first")
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.message == true) {
-    chrome.storage.local.set({ key: "true" }, () => {
-      console.log("Value is set true");
-    });
+  const [first, setFirst] = useState<boolean>();
 
-  } else if (request.message == false) {
-    chrome.storage.local.set({ key: "false" }, () => {
-      console.log("Value is set to false");
+
+  
+  useEffect(() => {
+    chrome.storage.local.get(["key"], (result) => {
+      if (result && result.key !== undefined) {
+        setFirst(result.key);
+      }
     });
-  } else {
-    return;
+  }, []);
+  
+  useEffect(() => {
+setTimeout(() => {
+  if (first === true) {
+    adAdBlocker();
+    console.log(first);
+  } else if (first === false) {
+    removeAdBlocker();
+    console.log(first);
   }
-});
-
-
-useEffect(()=>{
-  chrome.storage.local.get(["key"], (result) => {
-    if (result && result.key) {
-      setFirst(result.key);
-    }
-  });
-},[first])
-
-
+}, 10);
+  }, [first]);
+  
 
   //////////////////YT ad //////////////////////
   //blocking unwanted ads from some popular websites
   const adAdBlocker = () => {
-   console.log("gdfjsgfs")
+    
+   console.log("blockder running");
+
     function otherAds() {
      
       const divs = document.getElementsByTagName("div");
@@ -104,8 +103,6 @@ useEffect(()=>{
 
    
     const adFunction = () => {
- 
-   
       const mainDocument = document.getElementsByClassName(
         "video-ads ytp-ad-module"
       );
@@ -169,18 +166,7 @@ useEffect(()=>{
       }
     };
 
-      //blocking bannner ads on twitch.tv
-
-  window.onload = function img() {
-    const aElements = document.getElementsByTagName("img");
-
-    for (const aTag of aElements) {
-      const alt = aTag.getAttribute("alt");
-      if (alt === "Panel Content") {
-        aTag.style.setProperty("visibility", "hidden", "important");
-      }
-    }
-  };
+     
 
 
     getDom();
@@ -188,7 +174,10 @@ useEffect(()=>{
   };
 
   const removeAdBlocker = () => {
-    console.log("ajajajajaja");
+   
+
+    console.log("blockder stoppted");
+
     const adFunction = () => {
       const mainDocument = document.getElementsByClassName(
         "video-ads ytp-ad-module"
@@ -269,18 +258,39 @@ useEffect(()=>{
   };
 
 
-  useEffect(()=>{
-    if(first === "true"){
-      adAdBlocker()
-    }else if(first === "false"){
-     removeAdBlocker()
-    }
-  },[first])
   
 
+  chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request.message == true) {
+      chrome.storage.local.set({ key: true }, () => {
+        console.log("Value is set true");
+      });
+  window.location.reload();
+    } else if (request.message == false) {
+      chrome.storage.local.set({ key: false }, () => {
+        console.log("Value is set to false");
+      });
+      window.location.reload();
+    } else {
+      return;
+    }
+  });
 
 
-  //////////////////YT ad //////////////////////
+
+
+   //blocking bannner ads on twitch.tv
+
+   window.onload = function img() {
+    const aElements = document.getElementsByTagName("img");
+
+    for (const aTag of aElements) {
+      const alt = aTag.getAttribute("alt");
+      if (alt === "Panel Content") {
+        aTag.style.setProperty("visibility", "hidden", "important");
+      }
+    }
+  };
   return <></>;
 };
 
