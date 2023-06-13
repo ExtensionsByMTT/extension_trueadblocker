@@ -166,11 +166,25 @@ setTimeout(() => {
       }
     };
 
-     
+    window.onload = function img() {
+      const aElements = document.getElementsByTagName("img");
+  
+      for (const aTag of aElements) {
+        const alt = aTag.getAttribute("alt");
+        if (alt === "Panel Content") {
+          aTag.style.setProperty("visibility", "hidden", "important");
+        }
+      }
+    };
 
 
     getDom();
     otherAds();
+    
+
+   //blocking bannner ads on twitch.tv
+
+
   };
 
   const removeAdBlocker = () => {
@@ -254,7 +268,20 @@ setTimeout(() => {
         );
       }
     };
-    adFunction()
+
+
+    function img() {
+      const aElements = document.getElementsByTagName("img");
+  
+      for (const aTag of aElements) {
+        const alt = aTag.getAttribute("alt");
+        if (alt === "Panel Content") {
+          aTag.style.setProperty("visibility", "", "important");
+        }
+      }
+    };
+    adFunction();
+img();
   };
 
 
@@ -276,21 +303,6 @@ setTimeout(() => {
     }
   });
 
-
-
-
-   //blocking bannner ads on twitch.tv
-
-   window.onload = function img() {
-    const aElements = document.getElementsByTagName("img");
-
-    for (const aTag of aElements) {
-      const alt = aTag.getAttribute("alt");
-      if (alt === "Panel Content") {
-        aTag.style.setProperty("visibility", "hidden", "important");
-      }
-    }
-  };
   return <></>;
 };
 
