@@ -8,9 +8,7 @@ import "./contentScript.css";
 const App: React.FC<{}> = () => {
 
   const [first, setFirst] = useState<boolean>();
-
-
-  
+const [installed, setInstalled] = useState<boolean>()
   useEffect(() => {
     chrome.storage.local.get(["key"], (result) => {
       if (result && result.key !== undefined) {
@@ -21,25 +19,21 @@ const App: React.FC<{}> = () => {
   
   useEffect(() => {
 setTimeout(() => {
-  if (first === true) {
+  if (first === true || installed === true) {
     adAdBlocker();
-    console.log(first);
+   console.log(first);
   } else if (first === false) {
     removeAdBlocker();
     console.log(first);
   }
-}, 10);
+}, 100);
   }, [first]);
   
-
   ////////////////// removing YTs ads //////////////////////
-
   const adAdBlocker = () => {
-    
    console.log("blockder running");
   //blocking unwanted ads from some popular websites
     function otherAds() {
-     
       const divs = document.getElementsByTagName("div");
       for (const div of divs) {
         // console.log("filter function loop is running");
@@ -60,16 +54,16 @@ setTimeout(() => {
         // for blocking yt-popUp Ads
         if (
           document.getElementsByClassName(
-            "style-scope ytd-rich-grid-row"
+            "style-scope ytd-ad-slot-renderer"
           )[0] !== undefined
         ) {
           const richGridRow = document.getElementsByClassName(
-            "style-scope ytd-rich-grid-row"
+            "style-scope ytd-ad-slot-renderer"
           )[0] as HTMLElement;
-          richGridRow.style.display = "none";
+          richGridRow.style.setProperty("visibility", "hidden", "important");
         }if(document.getElementsByClassName("style-scope ytd-promoted-sparkles-web-renderer")[0] !== undefined){
           const ytdPromoted=document.getElementsByClassName("style-scope ytd-promoted-sparkles-web-renderer")[0] as HTMLElement;
-          ytdPromoted.style.display="none"
+          ytdPromoted.style.setProperty("visibility", "hidden", "important");
         }
       }
     }
@@ -284,6 +278,9 @@ setTimeout(() => {
 img();
   };
 
+
+
+
   ////////receiving message from popup.js////////
   chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.message == true) {
@@ -300,6 +297,17 @@ img();
       return;
     }
   });
+//////messsage from background script///////
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.message === "installed") {
+setInstalled(true);
+  }
+});
+
+
+
+
+
 
   return <></>;
 };

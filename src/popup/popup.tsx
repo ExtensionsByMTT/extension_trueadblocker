@@ -218,7 +218,7 @@ const turnOnAdBlc = () => {
   return (
     <div>
       
-      {isActiveYoutube ? (
+      {isActiveYoutube === false ? (
       <>
         <Header title="TrueAdBlocker"/>
         <div style={{marginTop:"45px"}}><h3 className="extHeading" style={{fontSize: "25px"}}>Connect to Block Ads On</h3>
@@ -244,38 +244,40 @@ const turnOnAdBlc = () => {
           ) : (
             <>
             
-      <div className="main-dis">
-      <div className="main-disconnect">
-             
-             
-             <div
-               id="ConnectionButton"
-               className="connected"
-               onClick={turnOnAdBlc}
-             >
-               <div className="staticOuterCircle"></div>
-               <div className="staticInnerCircle"></div>
-               <div className="staticBackground"></div>
-               <span className="title">Stop</span>
-             </div>
-           </div>
-      
-           <div className="features">
-           <AnimatedCircle/>
-      <div style={{padding:"0px 10px 0px 10px"}}>       <div className="youtube">
-               <h4>YouTube</h4>
-               <span><img src="./youtube.png"></img> </span>
-             </div>
-             <div className="twitch">
-               <h4>Twitch</h4>
-               <span><img src="./twitch.png"></img> </span>
-             </div>
-             <div className="twitch">
-               <h4>malicious ads</h4>
-               <span><img src="./malicious.png"></img> </span>
-             </div></div>
-           </div>
-      </div>
+ {
+  isActiveYoutube?     <div className="main-dis">
+  <div className="main-disconnect">
+         
+         
+         <div
+           id="ConnectionButton"
+           className="connected"
+           onClick={turnOnAdBlc}
+         >
+           <div className="staticOuterCircle"></div>
+           <div className="staticInnerCircle"></div>
+           <div className="staticBackground"></div>
+           <span className="title">Stop</span>
+         </div>
+       </div>
+  
+       <div className="features">
+       <AnimatedCircle/>
+  <div style={{padding:"0px 10px 0px 10px"}}>       <div className="youtube">
+           <h4>YouTube</h4>
+           <span><img src="./youtube.png"></img> </span>
+         </div>
+         <div className="twitch">
+           <h4>Twitch</h4>
+           <span><img src="./twitch.png"></img> </span>
+         </div>
+         <div className="twitch">
+           <h4>malicious ads</h4>
+           <span><img src="./malicious.png"></img> </span>
+         </div></div>
+       </div>
+  </div>:""
+ }
             </>
           )}
         </div>
