@@ -8,7 +8,7 @@ import "./contentScript.css";
 const App: React.FC<{}> = () => {
 
   const [first, setFirst] = useState<boolean>();
-const [installed, setInstalled] = useState<boolean>()
+
   useEffect(() => {
     chrome.storage.local.get(["key"], (result) => {
       if (result && result.key !== undefined) {
@@ -19,7 +19,7 @@ const [installed, setInstalled] = useState<boolean>()
   
   useEffect(() => {
 setTimeout(() => {
-  if (first === true || installed === true) {
+  if (first === true) {
     adAdBlocker();
    console.log(first);
   } else if (first === false) {
@@ -300,7 +300,9 @@ img();
 //////messsage from background script///////
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.message === "installed") {
-setInstalled(true);
+    chrome.storage.local.set({ key: true }, () => {
+      console.log("Value is set true");
+    });
   }
 });
 
