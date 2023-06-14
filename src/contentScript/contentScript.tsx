@@ -298,13 +298,26 @@ img();
     }
   });
 //////messsage from background script///////
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  if (request.message === "installed") {
-    chrome.storage.local.set({ key: true }, () => {
-      console.log("Value is set true");
-    });
-  }
-});
+
+
+
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.message === "installed") {
+      chrome.storage.local.set({ key: true }, () => {
+        console.log("Value is set true");
+       setTimeout(()=>{
+        chrome.storage.local.get(["key"], (result) => {
+          if (result && result.key !== undefined) {
+            setFirst(result.key);
+          }
+        });
+       },100)
+      });
+    }
+  });
+
+
+
 
 
 

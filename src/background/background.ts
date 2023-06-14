@@ -14,7 +14,7 @@ chrome.runtime.onInstalled.addListener(function() {
       if (changeInfo.status === "complete" && tab.active) {
         chrome.tabs.sendMessage(tabId, { message: "installed" }, function(response) {
           if (chrome.runtime.lastError) {
-            console.error(chrome.runtime.lastError);
+            console.log(chrome.runtime.lastError);
           } else if (response && response.farewell) {
             console.log(response.farewell, "response");
           }
