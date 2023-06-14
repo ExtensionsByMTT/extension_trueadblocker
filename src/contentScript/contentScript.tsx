@@ -32,12 +32,12 @@ setTimeout(() => {
   }, [first]);
   
 
-  //////////////////YT ad //////////////////////
-  //blocking unwanted ads from some popular websites
+  ////////////////// removing YTs ads //////////////////////
+
   const adAdBlocker = () => {
     
    console.log("blockder running");
-
+  //blocking unwanted ads from some popular websites
     function otherAds() {
      
       const divs = document.getElementsByTagName("div");
@@ -186,7 +186,7 @@ setTimeout(() => {
 
 
   };
-
+///////////injecting normal DOM for showing ads/////////// 
   const removeAdBlocker = () => {
    
 
@@ -284,9 +284,7 @@ setTimeout(() => {
 img();
   };
 
-
-  
-
+  ////////receiving message from popup.js////////
   chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.message == true) {
       chrome.storage.local.set({ key: true }, () => {
