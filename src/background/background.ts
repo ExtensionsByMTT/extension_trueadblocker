@@ -1,5 +1,6 @@
 // background.js
 chrome.runtime.onInstalled.addListener(function() {
+  console.log("installled");
     chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
       if (changeInfo.status === "complete" && tab.active) {
         chrome.tabs.sendMessage(tabId, { message: "installed" }, function(response) {

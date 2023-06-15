@@ -26,13 +26,14 @@ const [installed, setInstalled] = useState<boolean>();
         removeAdBlocker();
         console.log(first);
       }
-    }, 100);
+    }, 10);
   }, [first, installed]);
 
 
 
   ////////////////// removing YTs ads //////////////////////
   const adAdBlocker = () => {
+    console.log("adBlocker running")
   //blocking unwanted ads from some popular websites
     function otherAds() {
       const divs = document.getElementsByTagName("div");
@@ -110,8 +111,8 @@ const [installed, setInstalled] = useState<boolean>();
 
       const playerAds = document.getElementById("player-ads");
 
-      const richGridRow = document.getElementsByClassName(
-        "style-scope ytd-ad-slot-renderer"
+      const richGridRow = document.getElementsByTagName(
+        "ytd-ad-slot-renderer"
       );
 
 
@@ -153,7 +154,10 @@ const [installed, setInstalled] = useState<boolean>();
         (textOverlay[0] as HTMLElement).style.display = "none";
       }
       if (richGridRow.length > 0) {
-        (richGridRow[0] as HTMLElement).style.setProperty("display", "none", "important");;
+        for (let i = 0; i < richGridRow.length; i++) {
+          const element = richGridRow[i] as HTMLElement;
+  element.style.display = 'none';
+        }
       }
     };
 
@@ -163,7 +167,7 @@ const [installed, setInstalled] = useState<boolean>();
       for (const aTag of aElements) {
         const alt = aTag.getAttribute("alt");
         if (alt === "Panel Content") {
-          aTag.style.setProperty("visibility", "hidden", "important");
+          aTag.style.setProperty("display", "none", "important");
         }
       }
     };
@@ -303,13 +307,15 @@ img();
     if (request.message === "installed") {
       chrome.storage.local.set({ key: true }, () => {
         console.log("Value is set true");
-       setTimeout(()=>{
-        chrome.storage.local.get(["key"], (result) => {
-          if (result && result.key !== undefined) {
-            setInstalled(result.key);
-          }
-        });
-       },1)
+    
+        setTimeout(()=>{
+          chrome.storage.local.get(["key"], (result) => {
+            if (result && result.key !== undefined) {
+              setInstalled(result.key);
+            }
+          });
+         },10)
+ 
       });
     }
   });
