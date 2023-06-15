@@ -8,7 +8,7 @@ import "./contentScript.css";
 const App: React.FC<{}> = () => {
 
   const [first, setFirst] = useState<boolean>();
-const [installed, setInstalled] = useState<boolean>()
+const [installed, setInstalled] = useState<boolean>();
   useEffect(() => {
     chrome.storage.local.get(["key"], (result) => {
       if (result && result.key !== undefined) {
@@ -18,20 +18,21 @@ const [installed, setInstalled] = useState<boolean>()
   }, []);
   
   useEffect(() => {
-setTimeout(() => {
-  if (first === true || installed === true) {
-    adAdBlocker();
-   console.log(first);
-  } else if (first === false) {
-    removeAdBlocker();
-    console.log(first);
-  }
-}, 10);
-  }, [first,installed]);
-  
+    setTimeout(() => {
+      if (first === true || installed === true ) {
+        adAdBlocker();
+        console.log(first);
+      } else if (first === false) {
+        removeAdBlocker();
+        console.log(first);
+      }
+    }, 100);
+  }, [first, installed]);
+
+
+
   ////////////////// removing YTs ads //////////////////////
   const adAdBlocker = () => {
-   console.log("blockder running");
   //blocking unwanted ads from some popular websites
     function otherAds() {
       const divs = document.getElementsByTagName("div");
@@ -52,25 +53,7 @@ setTimeout(() => {
         }
 
         // for blocking yt-popUp Ads
-        if (
-          document.getElementsByClassName(
-            "style-scope ytd-ad-slot-renderer"
-          )[0] !== undefined
-        ) {
-          const richGridRow = document.getElementsByClassName(
-            "style-scope ytd-ad-slot-renderer"
-          )[0] as HTMLElement;
-          richGridRow.style.setProperty("display", "none", "important");
-        }
-        
-        if(document.getElementsByClassName("style-scope ytd-promoted-sparkles-web-renderer")[0] !== undefined){
-          const ytdPromoted=document.getElementsByClassName("style-scope ytd-promoted-sparkles-web-renderer")[0] as HTMLElement;
-          ytdPromoted.style.setProperty("display", "none", "important");
-        }
-        if(document.getElementsByTagName("ytd-item-section-renderer")[0] !== undefined){
-          const ytdPromotedAds=document.getElementsByClassName("ytd-item-section-renderer")[0] as HTMLElement;
-          ytdPromotedAds.style.setProperty("display", "none", "important");
-        }
+    
       }
     }
 
@@ -127,6 +110,11 @@ setTimeout(() => {
 
       const playerAds = document.getElementById("player-ads");
 
+      const richGridRow = document.getElementsByClassName(
+        "style-scope ytd-ad-slot-renderer"
+      );
+
+
       const handleSkipBtn = () => {
         if (skipBtn.length > 0) {
           (skipBtn[0] as HTMLButtonElement).click();
@@ -163,6 +151,9 @@ setTimeout(() => {
 
       if (textOverlay.length > 0) {
         (textOverlay[0] as HTMLElement).style.display = "none";
+      }
+      if (richGridRow.length > 0) {
+        (richGridRow[0] as HTMLElement).style.setProperty("display", "none", "important");;
       }
     };
 
@@ -322,12 +313,6 @@ img();
       });
     }
   });
-
-
-
-
-
-
 
 
 
