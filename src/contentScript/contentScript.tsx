@@ -26,7 +26,7 @@ setTimeout(() => {
     removeAdBlocker();
     console.log(first);
   }
-}, 100);
+}, 10);
   }, [first]);
   
   ////////////////// removing YTs ads //////////////////////
@@ -60,10 +60,10 @@ setTimeout(() => {
           const richGridRow = document.getElementsByClassName(
             "style-scope ytd-ad-slot-renderer"
           )[0] as HTMLElement;
-          richGridRow.style.setProperty("visibility", "hidden", "important");
+          richGridRow.style.setProperty("display", "none", "important");
         }if(document.getElementsByClassName("style-scope ytd-promoted-sparkles-web-renderer")[0] !== undefined){
           const ytdPromoted=document.getElementsByClassName("style-scope ytd-promoted-sparkles-web-renderer")[0] as HTMLElement;
-          ytdPromoted.style.setProperty("visibility", "hidden", "important");
+          ytdPromoted.style.setProperty("display", "none", "important");
         }
       }
     }
