@@ -8,7 +8,7 @@ import "./contentScript.css";
 const App: React.FC<{}> = () => {
 
   const [first, setFirst] = useState<boolean>();
-
+const [installed, setInstalled] = useState<boolean>()
   useEffect(() => {
     chrome.storage.local.get(["key"], (result) => {
       if (result && result.key !== undefined) {
@@ -19,7 +19,7 @@ const App: React.FC<{}> = () => {
   
   useEffect(() => {
 setTimeout(() => {
-  if (first === true) {
+  if (first === true || installed === true) {
     adAdBlocker();
    console.log(first);
   } else if (first === false) {
@@ -27,7 +27,7 @@ setTimeout(() => {
     console.log(first);
   }
 }, 10);
-  }, [first]);
+  }, [first,installed]);
   
   ////////////////// removing YTs ads //////////////////////
   const adAdBlocker = () => {
@@ -61,9 +61,15 @@ setTimeout(() => {
             "style-scope ytd-ad-slot-renderer"
           )[0] as HTMLElement;
           richGridRow.style.setProperty("display", "none", "important");
-        }if(document.getElementsByClassName("style-scope ytd-promoted-sparkles-web-renderer")[0] !== undefined){
+        }
+        
+        if(document.getElementsByClassName("style-scope ytd-promoted-sparkles-web-renderer")[0] !== undefined){
           const ytdPromoted=document.getElementsByClassName("style-scope ytd-promoted-sparkles-web-renderer")[0] as HTMLElement;
           ytdPromoted.style.setProperty("display", "none", "important");
+        }
+        if(document.getElementsByTagName("ytd-item-section-renderer")[0] !== undefined){
+          const ytdPromotedAds=document.getElementsByClassName("ytd-item-section-renderer")[0] as HTMLElement;
+          ytdPromotedAds.style.setProperty("display", "none", "important");
         }
       }
     }
@@ -297,8 +303,9 @@ img();
       return;
     }
   });
-//////messsage from background script///////
 
+
+//////messsage from background script///////
 
 
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
@@ -308,13 +315,16 @@ img();
        setTimeout(()=>{
         chrome.storage.local.get(["key"], (result) => {
           if (result && result.key !== undefined) {
-            setFirst(result.key);
+            setInstalled(result.key);
           }
         });
-       },100)
+       },1)
       });
     }
   });
+
+
+
 
 
 
