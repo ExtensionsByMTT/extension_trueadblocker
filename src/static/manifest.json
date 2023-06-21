@@ -13,10 +13,20 @@
     "default_title": "TrueAdBlocker",
     "default_icon": "TrueAdBlocker16x16.png"
   },
-  "permissions": ["declarativeNetRequest","storage","scripting","tabs"],
-  "host_permissions": [
-    "*://*.youtube.com/*"
+  "permissions": [
+    "declarativeNetRequest",
+    "storage",
+    "scripting",
+    "tabs",
+    "webRequest"
   ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
+  },
   "declarative_net_request": {
     "rule_resources": [
       {
@@ -28,13 +38,21 @@
   },
   "options_page": "options.html",
   "background": {
-    "service_worker":"background.js"
+    "service_worker": "background.js"
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
       "js": ["contentScript.js"]
+      
      
+    }
+  ],
+  
+  "web_accessible_resources": [
+    {
+      "resources": ["injected/*", "lib/*"],
+      "matches": ["https://open.spotify.com/*"]
     }
   ]
 }

@@ -1,3 +1,5 @@
+
+import rules from '../rules';
 // background.js
 chrome.runtime.onInstalled.addListener(function(details) {
   if (details.reason === "install") {
@@ -26,51 +28,48 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   }
 });
 
+chrome.declarativeNetRequest.updateDynamicRules({
+  removeRuleIds: rules.map((rule) => rule.id),
+  addRules: rules
+});
+
+// chrome.webRequest.onCompleted.addListener(async function(details) {
+//   console.log(details.responseHeaders[3].value,"hehehe")
+//   for (var i = 0; i < details.responseHeaders.length; ++i) 
+//   {
+//       if (details.responseHeaders[i].name.toLowerCase() == "content-security-policy")
+//       {
+//           var cspValue = details.responseHeaders[i].value;
+//           var entries = cspValue.split(";");
+//           for (var j = 0; j < entries.length; j++);
+//           {
+//               if (entries[j].includes("script-src"))
+//               {
+//                   // a hack to allow the page to load our injected inline scripts
+//                   entries[j] += " 'unsafe-inline'"; 
+//               }
+//           }
+
+//           details.responseHeaders[i].value = entries.join(";");
+          
+//       }
+//   }
+
+//   return {responseHeaders: details.responseHeaders};
+
+// }, {urls: ['<all_urls>']}, ['responseHeaders']);
 
 
 
-//   chrome.runtime.onMessage.addListener(onMessage);
 
-// function onMessage(messageEvent, sender, sendResponse) {
-//     if (messageEvent.name === "updateCounter") {
-//         if ("counterValue" in messageEvent) {
-//             chrome.action.setBadgeText({ text: messageEvent.counterValue.toString() });
-//         }
-//     } else if (messageEvent.name === "getCounter") {
-//         chrome.action.getBadgeText({}, function (result) {
-//             sendResponse(result);
-//         });
-//     }
 
-//     // Need to return true to indicate that sendResponse will be called asynchronously
-//     return true;
-// }
 
-// chrome.webRequest.onHeadersReceived.addListener(
-//     function (details) {
-//         const responseHeaders = details.responseHeaders || [];
-//         for (let i = 0; i < responseHeaders.length; ++i) {
-//             if (responseHeaders[i].name.toLowerCase() === "content-security-policy") {
-//                 let cspValue = responseHeaders[i].value;
-//                 const entries = cspValue.split(";");
-//                 for (let j = 0; j < entries.length; j++) {
-//                     if (entries[j].includes("script-src")) {
-//                         // A hack to allow the page to load our injected inline scripts
-//                         entries[j] += " 'unsafe-inline'";
-//                     }
-//                 }
-//                 responseHeaders[i].value = entries.join(";");
-//                 break;
-//             }
-//         }
-
-//         return { responseHeaders: responseHeaders };
-//     },
- 
-    
-// );
 
   
+
+
+
+
 
   
   
