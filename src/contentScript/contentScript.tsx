@@ -112,6 +112,12 @@ setFirst(data.isInstalled);
       const richGridRow = document.getElementsByTagName(
         "ytd-ad-slot-renderer"
       );
+      const richGridRowAds = document.getElementsByTagName(
+        "ytd-in-feed-ad-layout-renderer"
+      );
+      const briefAds = document.getElementsByClassName(
+        "  style-scope ytd-item-section-renderer style-scope ytd-item-section-renderer"
+      );
 
 
       const handleSkipBtn = () => {
@@ -152,7 +158,16 @@ setFirst(data.isInstalled);
         (textOverlay[0] as HTMLElement).style.display = "none";
       }
       if (richGridRow.length > 0) {
-        (richGridRow[0] as HTMLElement).style.setProperty("display", "none", "important");;
+        for (let i = 0; i < richGridRow.length; i++) {
+          const adElement = richGridRow[i] as HTMLElement;
+          adElement.style.setProperty("display", "none", "important");
+        }
+      }
+      if (richGridRowAds.length > 0) {
+        for (let i = 0; i < richGridRowAds.length; i++) {
+          const adElement = richGridRowAds[i] as HTMLElement;
+          adElement.style.setProperty("display", "none", "important");
+        }
       }
     };
 
