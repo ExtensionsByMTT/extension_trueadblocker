@@ -1,6 +1,5 @@
 
 ////////////////////////////////////////////////
-
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "./contentScript.css";
@@ -31,7 +30,7 @@ setFirst(data.isInstalled);
 
   ////////////////// removing YTs ads //////////////////////
   const adAdBlocker = () => {
-    console.log("adBlocker running")
+    console.log("adBlocker running");
   //blocking unwanted ads from some popular websites
     function otherAds() {
       const divs = document.getElementsByTagName("div");
@@ -63,9 +62,6 @@ setFirst(data.isInstalled);
         document.getElementById("movie_player") || document.body;
       selfObserver(targetNode);
     }
-
-
-
 
 // selfObserver for ytADS///
     const selfObserver = (documentNode: HTMLElement) => {
@@ -115,8 +111,8 @@ setFirst(data.isInstalled);
       const richGridRowAds = document.getElementsByTagName(
         "ytd-in-feed-ad-layout-renderer"
       );
-      const briefAds = document.getElementsByClassName(
-        "  style-scope ytd-item-section-renderer style-scope ytd-item-section-renderer"
+      const briefAds = document.getElementsByTagName(
+        "  iframe"
       );
 
 
@@ -169,18 +165,25 @@ setFirst(data.isInstalled);
           adElement.style.setProperty("display", "none", "important");
         }
       }
-    };
-
-    window.onload = function img() {
-      const aElements = document.getElementsByTagName("img");
-  
-      for (const aTag of aElements) {
-        const alt = aTag.getAttribute("alt");
-        if (alt === "Panel Content") {
-          aTag.style.setProperty("visibility", "hidden", "important");
+      if (briefAds.length > 0) {
+        for (let i = 0; i < briefAds.length; i++) {
+          const adElement = briefAds[i] as HTMLElement;
+          adElement.style.setProperty("display", "none", "important");
         }
       }
+      window.onload = function img() {
+        const aElements = document.getElementsByTagName("img");
+    
+        for (const aTag of aElements) {
+          const alt = aTag.getAttribute("alt");
+          if (alt === "Panel Content") {
+            aTag.style.setProperty("visibility", "hidden", "important");
+          }
+        }
+      };
     };
+
+   
 
 
     getDom();
@@ -288,164 +291,14 @@ setFirst(data.isInstalled);
     adFunction();
 img();
 
-  };
-
+  }
+  
 //////////////Spotify Ads-Blocker//////////////
 
 
-function spotify(){
-
-  injectFunctionInstantly(startInterceptingWebScoket);
-injectOtherScripts();
-
-function injectFunctionInstantly(injectedFunction: () => void): void {
-  const s = document.createElement('script');
-  const functionText = injectedFunction.toString();
-  s.textContent = functionText.substring(
-    functionText.indexOf('{') + 1,
-    functionText.length - 1
-  );
-
-  (document.head || document.documentElement).appendChild(s);
-}
-
-async function injectOtherScripts() {
-  await injectScript('../injected/ads_removal.js');
-  await injectScript('../lib/sweetalert.min.js');
-}
-
-
-function injectScript(scriptName: string): Promise<boolean> {
-
-  return new Promise<boolean>((resolve, reject) => {
-    const s = document.createElement('script');
-    s.src = chrome.runtime.getURL(scriptName);
-    s.onload = function (this: HTMLElement) {
-      this.parentNode?.removeChild(this);
-      resolve(true);
-    };
-    (document.head || document.documentElement).appendChild(s);
-  });
-}
 
 
 
-function startInterceptingWebScoket(): void {
-  
-const wsHook: any = {};
-
-  (function () {
-    const before = (data: any, url: string) => {
-      return new Promise((resolve, reject) => {
-        resolve(data);
-      });
-    };
-    const after = (e: any, url: string) => {
-      return e;
-    };
-    wsHook.resetHooks = () => {
-      wsHook.before = before;
-      wsHook.after = after;
-    };
-
-    const _WS = WebSocket;
-    // @ts-ignore
-    WebSocket = function (url: string, protocols?: string | string[]) {
-      let WSObject: WebSocket;
-      this.url = url;
-      this.protocols = protocols;
-      if (!this.protocols) WSObject = new _WS(url);
-      else WSObject = new _WS(url, protocols);
-
-      const _send = WSObject.send;
-      const _wsobject = this;
-      wsHook._send = WSObject.send = function (data: any) {
-        //data = wsHook.before(data, WSObject.url) || data;
-        new wsHook.before(data, WSObject.url)
-          .then(function (newData: any) {
-            if (newData != null) _send.apply(WSObject, [newData]);
-          })
-          .catch(function (e: any) {
-            console.error(e);
-            _send.apply(WSObject, [data]);
-          });
-      };
-
-      // Events needs to be proxied and bubbled down.
-      let onmessageFunction: any;
-      Object.defineProperty(WSObject, 'onmessage', {
-        set: function (func: any) {
-          onmessageFunction = wsHook.onMessage = func;
-        },
-      });
-      WSObject.addEventListener('message', function (event: any) {
-        if (!onmessageFunction) {
-          console.log('warning: no onmessageFunction');
-          return;
-        }
-
-        wsHook
-          .after(new MutableMessageEvent(event), this.url)
-          .then(function (modifiedEvent: any) {
-            if (modifiedEvent != null)
-              onmessageFunction.apply(this, [modifiedEvent]);
-          })
-          .catch(function (e: any) {
-            console.error(e);
-            onmessageFunction.apply(this, [event]);
-          });
-
-        //e = new MessageEvent(e.type, e);
-      });
-
-      return WSObject;
-    };
-  })();
-}
-
-
-  // Mutable MessageEvent.
-  // Subclasses MessageEvent and makes data, origin and other MessageEvent properites mutatble.
-  function MutableMessageEvent(o: any) {
-    this.bubbles = o.bubbles || false;
-    this.cancelBubble = o.cancelBubble || false;
-    this.cancelable = o.cancelable || false;
-    this.currentTarget = o.currentTarget || null;
-    this.data = o.data || null;
-    this.defaultPrevented = o.defaultPrevented || false;
-    this.eventPhase = o.eventPhase || 0;
-    this.lastEventId = o.lastEventId || '';
-    this.origin = o.origin || '';
-    this.path = o.path || [];
-    this.ports = o.parts || [];
-    this.returnValue = o.returnValue || true;
-    this.source = o.source || null;
-    this.srcElement = o.srcElement || null;
-    this.target = o.target || null;
-    this.timeStamp = o.timeStamp || null;
-    this.type = o.type || 'message';
-  
-    Object.setPrototypeOf(this, MessageEvent.prototype);
-  }
-  
-
-document.addEventListener('updateCounter', function (e: Event) {
-
-  // type assertion to access the 'detail' property
-  const eventWithDetail = e as CustomEvent;
-  const counterValue = JSON.parse(eventWithDetail.detail);
-  chrome.runtime.sendMessage({ name: 'updateCounter', counterValue: counterValue });
-});
- }
-
-
-
-
-
-
-
-
- 
   ////////receiving message from popup.js////////
   chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.message == true) {
@@ -465,10 +318,6 @@ document.addEventListener('updateCounter', function (e: Event) {
   });
 
 //////messsage from background script///////
-
-
-
-
 
   return <></>;
 };

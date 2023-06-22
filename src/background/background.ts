@@ -1,5 +1,4 @@
 
-import rules from '../rules';
 // background.js
 chrome.runtime.onInstalled.addListener(function(details) {
   if (details.reason === "install") {
@@ -28,10 +27,6 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   }
 });
 
-chrome.declarativeNetRequest.updateDynamicRules({
-  removeRuleIds: rules.map((rule) => rule.id),
-  addRules: rules
-});
 
 // chrome.webRequest.onCompleted.addListener(async function(details) {
 //   console.log(details.responseHeaders[3].value,"hehehe")
@@ -57,7 +52,7 @@ chrome.declarativeNetRequest.updateDynamicRules({
 
 //   return {responseHeaders: details.responseHeaders};
 
-// }, {urls: ['<all_urls>']}, ['responseHeaders']);
+// }, {urls: ['https://open.spotify.com/']}, ['responseHeaders']);
 
 
 
