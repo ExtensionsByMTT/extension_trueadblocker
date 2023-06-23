@@ -292,12 +292,9 @@ setFirst(data.isInstalled);
 img();
 
   }
+  //////////////Spotify Ads-Blocker//////////////
+
   
-//////////////Spotify Ads-Blocker//////////////
-
-
-
-
 
   ////////receiving message from popup.js////////
   chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {

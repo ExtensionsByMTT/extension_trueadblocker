@@ -5,10 +5,7 @@ import "./popup.css";
 const App: React.FC<{}> = () => {
   return (
     <>
-    
-
-      <Loader />
-   
+      <Loader/>
     </>
   );
 };
