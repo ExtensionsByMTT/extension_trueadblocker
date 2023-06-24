@@ -44,14 +44,16 @@
     {
       "matches": ["<all_urls>"],
       "js": ["contentScript.js"]
-      
-     
+    },
+    {
+      "matches": ["https://*.twitch.tv/*"],
+      "js": ["adRemove.js"]
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["injected/*", "lib/*"],
-      "matches": ["https://open.spotify.com/*"]
+      "resources": ["../Twitch/remove_video_ads.js"],
+      "matches": ["https://*.twitch.tv/*"]
     }
   ]
 }

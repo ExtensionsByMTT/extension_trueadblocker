@@ -6,7 +6,7 @@ import "./contentScript.css";
 
 const App: React.FC<{}> = () => {
 
-  const [first, setFirst] = useState<boolean>();
+const [first, setFirst] = useState<boolean>();
   
   useEffect(() => {
     chrome.storage.local.get("isInstalled", function(data) {
@@ -20,6 +20,7 @@ setFirst(data.isInstalled);
     setTimeout(() => {
       if (first === true) {
         adAdBlocker();
+        Twitch();
         console.log(first);
       } else if (first === false) {
         removeAdBlocker();
@@ -77,9 +78,6 @@ setFirst(data.isInstalled);
       // Start observing
       observer.observe(documentNode, config);
     };
-
-
-   
     const adFunction = () => {
       const mainDocument = document.getElementsByClassName(
         "video-ads ytp-ad-module"
@@ -114,6 +112,7 @@ setFirst(data.isInstalled);
       const briefAds = document.getElementsByTagName(
         "  iframe"
       );
+    
 
 
       const handleSkipBtn = () => {
@@ -171,20 +170,7 @@ setFirst(data.isInstalled);
           adElement.style.setProperty("display", "none", "important");
         }
       }
-      window.onload = function img() {
-        const aElements = document.getElementsByTagName("img");
-    
-        for (const aTag of aElements) {
-          const alt = aTag.getAttribute("alt");
-          if (alt === "Panel Content") {
-            aTag.style.setProperty("visibility", "hidden", "important");
-          }
-        }
-      };
     };
-
-   
-
 
     getDom();
     otherAds();
@@ -196,8 +182,6 @@ setFirst(data.isInstalled);
   };
 ///////////injecting normal DOM for showing ads/////////// 
   const removeAdBlocker = () => {
-   
-
     console.log("blockder stoppted");
 
     const adFunction = () => {
@@ -276,25 +260,77 @@ setFirst(data.isInstalled);
         );
       }
     };
-
-
-    function img() {
-      const aElements = document.getElementsByTagName("img");
-  
-      for (const aTag of aElements) {
-        const alt = aTag.getAttribute("alt");
-        if (alt === "Panel Content") {
-          aTag.style.setProperty("visibility", "", "important");
-        }
-      }
-    };
-    adFunction();
-img();
-
+   
+  adFunction();
   }
-  
-//////////////Spotify Ads-Blocker//////////////
 
+  
+  const Twitch = () => {
+    if (typeof window.chrome === 'undefined') {
+      return; 
+    }
+    
+    // Get extension settings
+    function updateSettings(): void {
+      chrome.storage.local.get(['blockingMessageTTV', 'forcedQualityTTV', 'proxyTTV', 'proxyQualityTTV', 'adTimeTTV']).then((result: any) => {
+        var settings: any = {
+          BannerVisible: true,
+          ForcedQuality: null,
+          ProxyType: null,
+          ProxyQuality: null,
+          AdTime: 0
+        };
+        if (result.blockingMessageTTV === 'true' || result.blockingMessageTTV === 'false') {
+          settings.BannerVisible = result.blockingMessageTTV === 'true';
+        }
+        if (result.forcedQualityTTV) {
+          settings.ForcedQuality = result.forcedQualityTTV;
+        }
+        if (result.proxyTTV) {
+          settings.ProxyType = result.proxyTTV;
+        }
+        if (result.proxyQualityTTV) {
+          settings.ProxyQuality = result.proxyQualityTTV;
+        }
+        if (result.adTimeTTV) {
+          settings.AdTime = result.adTimeTTV;
+        }
+        window.postMessage(
+          {
+            type: 'SetTwitchAdblockSettings',
+            settings: settings,
+          },
+          '*'
+        );
+      });
+    }
+    
+    window.addEventListener('message', (event: any) => {
+      if (event.data.type && event.data.type == 'SetTwitchAdTime') {
+        chrome.storage.local.set({ adTimeTTV: event.data.adtime });
+        console.log('Set ad time to ' + event.data.adtime);
+      }
+    });
+    
+    function appendBlockingScript(): void {
+      const script: HTMLScriptElement = document.createElement('script');
+      script.src = chrome.runtime.getURL('../Twitch/remove_video_ads.js');
+      script.onload = updateSettings;
+      (document.body || document.head || document.documentElement).appendChild(script);
+    }
+    
+    chrome.storage.local.get(['onOffTTV'], (result: any) => {
+      if (chrome.runtime.lastError) {
+        console.error(chrome.runtime.lastError);
+        appendBlockingScript();
+        return;
+      }
+      if (result?.onOffTTV && result.onOffTTV === 'true') {
+        appendBlockingScript();
+      }
+    });
+  };
+  
 
 
 
@@ -316,8 +352,6 @@ img();
       return;
     }
   });
-
-//////messsage from background script///////
 
   return <></>;
 };
