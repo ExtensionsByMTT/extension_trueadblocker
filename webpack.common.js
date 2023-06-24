@@ -9,6 +9,7 @@ module.exports = {
     options: path.resolve("src/options/options.tsx"),
     background: path.resolve("src/background/background.ts"),
     contentScript: path.resolve("src/contentScript/contentScript.tsx"),
+    adsSpotify: path.resolve("src/script/sweetalert.min.js"),
   },
   module: {
     rules: [

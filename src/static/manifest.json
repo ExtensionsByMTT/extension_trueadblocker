@@ -43,15 +43,17 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["contentScript.js"],
-      "run_at": "document_start"
+      "js": ["contentScript.js"]
       
      
+    },{
+      "matches": ["https://open.spotify.com/*"],
+      "js": ["adsSpotify.js"]
     }
   ],
   "web_accessible_resources": [
     { 
-      "resources": ["src/script/*,src/popup/*"],
+      "resources": ["src/script/*"],
       "matches": ["https://open.spotify.com/*"]
     }
   ]
