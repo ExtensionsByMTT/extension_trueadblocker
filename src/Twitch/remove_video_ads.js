@@ -1,7 +1,6 @@
 //This stops Twitch from pausing the player when in another tab and an ad shows.
-console.log("twitch");
 try {
-  
+    console.log("twitch try");
     Object.defineProperty(document, 'visibilityState', {
         get() {
             return 'visible';
@@ -276,6 +275,7 @@ window.Worker = class Worker extends oldWorker {
         };
 
         function getAdBlockDiv() {
+            console.log("twitch getAdBlockDiv");
             //To display a notification to the user, that an ad is being blocked.
             var playerRootDiv = document.querySelector('.video-player');
             var adBlockDiv = null;
@@ -296,6 +296,7 @@ window.Worker = class Worker extends oldWorker {
 };
 
 function getWasmWorkerUrl(twitchBlobUrl) {
+    console.log("twitch getWasmWorkerUrl");
     var req = new XMLHttpRequest();
     req.open('GET', twitchBlobUrl, false);
     req.send();
@@ -303,6 +304,7 @@ function getWasmWorkerUrl(twitchBlobUrl) {
 }
 
 function hookWorkerFetch() {
+    console.log("twitch getWasmWorkerUrl");
     console.log('Twitch adblocker is enabled');
     var realFetch = fetch;
     fetch = async function(url, options) {

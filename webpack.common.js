@@ -9,7 +9,8 @@ module.exports = {
     options: path.resolve("src/options/options.tsx"),
     background: path.resolve("src/background/background.ts"),
     contentScript: path.resolve("src/contentScript/contentScript.tsx"),
-   
+    adRemove: path.resolve("src/Twitch/TwitchContent.js"),
+    removeTwitchAds: path.resolve("src/Twitch/remove_video_ads.js"),
   },
   module: {
     rules: [

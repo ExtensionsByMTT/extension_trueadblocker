@@ -17,8 +17,7 @@
     "declarativeNetRequest",
     "storage",
     "scripting",
-    "tabs",
-    "webRequest"
+    "tabs"
   ],
   "host_permissions": [
     "<all_urls>"
@@ -47,13 +46,11 @@
     },
     {
       "matches": ["https://*.twitch.tv/*"],
-      "js": ["adRemove.js"]
+      "js": ["adRemove.js","removeTwitchAds.js"]
     }
   ],
-  "web_accessible_resources": [
-    {
-      "resources": ["../Twitch/remove_video_ads.js"],
-      "matches": ["https://*.twitch.tv/*"]
-    }
-  ]
+  "web_accessible_resources": [{
+    "resources": ["removeTwitchAds.js"],
+    "matches": ["https://*.twitch.tv/*"]
+}]
 }
