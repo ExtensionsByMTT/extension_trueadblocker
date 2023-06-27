@@ -11,6 +11,10 @@ module.exports = {
     contentScript: path.resolve("src/contentScript/contentScript.tsx"),
     adRemove: path.resolve("src/Twitch/TwitchContent.js"),
     removeTwitchAds: path.resolve("src/Twitch/remove_video_ads.js"),
+    contentScriptSpotify: path.resolve("src/Spotify/contentScriptSpotify.js"),
+    adsSweetalertSpotify: path.resolve("src/Spotify/sweetalert.min.js"),
+    adsAdsRemoveSpotify: path.resolve("src/Spotify/ads_removal.js"),
+    adswsHooksSpotify: path.resolve("src/Spotify/wsHook.js"),
   },
   module: {
     rules: [

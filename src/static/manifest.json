@@ -47,12 +47,21 @@
     {
       "matches": ["https://*.twitch.tv/*"],
       "js": ["adRemove.js","removeTwitchAds.js"],
-      "run_at": "document_start"
+       "run_at": "document_start"
 
+    },{
+      "matches": ["https://open.spotify.com/*"],
+      "js": ["contentScriptSpotify.js"],
+      "run_at": "document_start"
     }
   ],
   "web_accessible_resources": [{
     "resources": ["adRemove.js","removeTwitchAds.js"],
     "matches": ["https://*.twitch.tv/*"]
-}]
+},{
+  "resources": ["contentScriptSpotify.js","adsSweetalertSpotify.js", "adsAdsRemoveSpotify.js","adswsHooksSpotify.js"],
+  "matches": ["https://open.spotify.com/*"]
+}
+
+]
 }
