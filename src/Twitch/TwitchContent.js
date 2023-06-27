@@ -1,8 +1,16 @@
-// Browser helpers
+
+chrome.storage.local.get("isInstalled", function(data) {
+    const local = data.isInstalled;
+    doSomethingWithLocal(local);
+  });
+  
+  
+function doSomethingWithLocal(local){
+    if(local === true){
+        // Browser helpers
 const isChromium = typeof window.chrome !== 'undefined';
 const isFirefox = typeof window.browser !== 'undefined';
 const browser = isFirefox ? window.browser : window.chrome;
-console.log("twitch")
 // Get extension settings
 function updateSettings() {
     browser.storage.local.get(['blockingMessageTTV','forcedQualityTTV','proxyTTV','proxyQualityTTV', 'adTimeTTV']).then(result => {
@@ -81,3 +89,10 @@ if (isFirefox) {
         }
     });
 }
+    }else{
+        return
+    }
+}
+
+
+

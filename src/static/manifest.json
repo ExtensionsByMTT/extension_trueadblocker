@@ -46,11 +46,13 @@
     },
     {
       "matches": ["https://*.twitch.tv/*"],
-      "js": ["adRemove.js","removeTwitchAds.js"]
+      "js": ["adRemove.js","removeTwitchAds.js"],
+      "run_at": "document_start"
+
     }
   ],
   "web_accessible_resources": [{
-    "resources": ["removeTwitchAds.js"],
+    "resources": ["adRemove.js","removeTwitchAds.js"],
     "matches": ["https://*.twitch.tv/*"]
 }]
 }

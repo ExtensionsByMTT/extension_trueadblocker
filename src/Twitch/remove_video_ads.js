@@ -1,6 +1,5 @@
 //This stops Twitch from pausing the player when in another tab and an ad shows.
 try {
-    console.log("twitch try");
     Object.defineProperty(document, 'visibilityState', {
         get() {
             return 'visible';
