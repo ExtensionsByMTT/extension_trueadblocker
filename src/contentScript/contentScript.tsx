@@ -111,6 +111,9 @@ setFirst(data.isInstalled);
       const briefAds = document.getElementsByTagName(
         "  iframe"
       );
+      const Twitch = document.getElementsByClassName(
+        "  Layout-sc-1xcs6mc-0 cDieGF default-panel"
+      );
     
 
 
@@ -169,15 +172,15 @@ setFirst(data.isInstalled);
           adElement.style.setProperty("display", "none", "important");
         }
       }
+      if (Twitch.length > 0) {
+        for (let i = 0; i < Twitch.length; i++) {
+          const adElement = Twitch[i] as HTMLElement;
+          adElement.style.setProperty("display", "none", "important");
+        }
+      }
     };
-
     getDom();
     otherAds();
-    
-
-   //blocking bannner ads on twitch.tv
-
-
   };
 ///////////injecting normal DOM for showing ads/////////// 
   const removeAdBlocker = () => {
@@ -280,7 +283,7 @@ setFirst(data.isInstalled);
       return;
     }
   });
-
+  
   return <></>;
 };
 

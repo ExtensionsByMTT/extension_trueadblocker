@@ -141,7 +141,7 @@ window.Worker = class Worker extends oldWorker {
                 if (adBlockDiv == null) {
                     adBlockDiv = getAdBlockDiv();
                 }
-                adBlockDiv.P.textContent = 'Blocking ads...';
+                adBlockDiv.P.textContent = 'Blocking ads by True AdBlocker...';
                 adBlockDiv.style.display = 'block';
 
                 //setting data-start-time as starting time of ad blocking
