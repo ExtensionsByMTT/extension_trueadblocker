@@ -1,7 +1,7 @@
 {
   "name": "TrueAdBlocker",
   "description": "TrueAdBlocker",
-  "version": "1.0.0",
+  "version": "1.3.3",
   "manifest_version": 3,
   "icons": {
     "16": "TrueAdBlocker16x16.png",
@@ -13,14 +13,8 @@
     "default_title": "TrueAdBlocker",
     "default_icon": "TrueAdBlocker16x16.png"
   },
-  "permissions": [
-    "declarativeNetRequest",
-    "storage",
-    "tabs"
-  ],
-  "host_permissions": [
-    "<all_urls>"
-  ],
+  "permissions": ["declarativeNetRequest", "storage"],
+  "host_permissions": ["<all_urls>"],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';",
     "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
@@ -45,22 +39,28 @@
     },
     {
       "matches": ["https://*.twitch.tv/*"],
-      "js": ["adRemove.js","removeTwitchAds.js"],
-       "run_at": "document_start"
-
-    },{
+      "js": ["adRemove.js", "removeTwitchAds.js"],
+      "run_at": "document_start"
+    },
+    {
       "matches": ["https://open.spotify.com/*"],
       "js": ["contentScriptSpotify.js"],
       "run_at": "document_start"
     }
   ],
-  "web_accessible_resources": [{
-    "resources": ["adRemove.js","removeTwitchAds.js"],
-    "matches": ["https://*.twitch.tv/*"]
-},{
-  "resources": ["contentScriptSpotify.js","adsSweetalertSpotify.js", "adsAdsRemoveSpotify.js","adswsHooksSpotify.js"],
-  "matches": ["https://open.spotify.com/*"]
-}
-
-]
+  "web_accessible_resources": [
+    {
+      "resources": ["adRemove.js", "removeTwitchAds.js"],
+      "matches": ["https://*.twitch.tv/*"]
+    },
+    {
+      "resources": [
+        "contentScriptSpotify.js",
+        "adsSweetalertSpotify.js",
+        "adsAdsRemoveSpotify.js",
+        "adswsHooksSpotify.js"
+      ],
+      "matches": ["https://open.spotify.com/*"]
+    }
+  ]
 }
