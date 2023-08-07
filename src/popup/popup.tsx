@@ -160,7 +160,7 @@ const Loader = () => {
     localStorage.setItem("appData", JSON.stringify(dataToStore));
   }, [isActiveYoutube]);
 
-  //////////////////////////////////
+  /////////////////////////////////////////////////////////////
 
   const tunOffAdBlc = () => {
     setIsActiveYoutube(!isActiveYoutube);
@@ -198,7 +198,7 @@ const Loader = () => {
     });
   };
 
-  /////////////////////////////////
+  ////////////////////////////////////////////
 
   return (
     <div>

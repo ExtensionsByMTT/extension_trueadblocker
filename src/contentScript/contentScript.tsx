@@ -1,21 +1,19 @@
-
 ////////////////////////////////////////////////
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "./contentScript.css";
 
 const App: React.FC<{}> = () => {
+  const [first, setFirst] = useState<boolean>();
 
-const [first, setFirst] = useState<boolean>();
-  
   useEffect(() => {
-    chrome.storage.local.get("isInstalled", function(data) {
+    chrome.storage.local.get("isInstalled", function (data) {
       if (data.isInstalled !== undefined) {
-setFirst(data.isInstalled);
+        setFirst(data.isInstalled);
       }
     });
   }, []);
-  
+
   useEffect(() => {
     setTimeout(() => {
       if (first === true) {
@@ -31,7 +29,7 @@ setFirst(data.isInstalled);
   ////////////////// removing YTs ads //////////////////////
   const adAdBlocker = () => {
     console.log("adBlocker running");
-  //blocking unwanted ads from some popular websites
+    //blocking unwanted ads from some popular websites
     function otherAds() {
       const divs = document.getElementsByTagName("div");
       for (const div of divs) {
@@ -51,19 +49,17 @@ setFirst(data.isInstalled);
         }
 
         // for blocking yt-popUp Ads
-    
       }
     }
 
     // get the YT Dom
     function getDom() {
-   
       const targetNode =
         document.getElementById("movie_player") || document.body;
       selfObserver(targetNode);
     }
 
-// selfObserver for ytADS///
+    // selfObserver for ytADS///
     const selfObserver = (documentNode: HTMLElement) => {
       const observer = new MutationObserver(() => {
         adFunction();
@@ -102,20 +98,14 @@ setFirst(data.isInstalled);
 
       const playerAds = document.getElementById("player-ads");
 
-      const richGridRow = document.getElementsByTagName(
-        "ytd-ad-slot-renderer"
-      );
+      const richGridRow = document.getElementsByTagName("ytd-ad-slot-renderer");
       const richGridRowAds = document.getElementsByTagName(
         "ytd-in-feed-ad-layout-renderer"
       );
-      const briefAds = document.getElementsByTagName(
-        "  iframe"
-      );
+      const briefAds = document.getElementsByTagName("  iframe");
       const Twitch = document.getElementsByClassName(
         "  Layout-sc-1xcs6mc-0 cDieGF default-panel"
       );
-    
-
 
       const handleSkipBtn = () => {
         if (skipBtn.length > 0) {
@@ -125,9 +115,8 @@ setFirst(data.isInstalled);
 
       if (mainDocument.length > 0) {
         handleSkipBtn();
-       
+
         if (playerOverlay.length > 0) {
-       
           (playerOverlay[0] as HTMLElement).style.visibility = "hidden";
           for (let i = 0; i < videoDocument.length; i++) {
             if (
@@ -139,7 +128,7 @@ setFirst(data.isInstalled);
               ).duration;
             }
           }
-        
+
           handleSkipBtn();
         }
         if (imageOverlay.length > 0) {
@@ -182,7 +171,7 @@ setFirst(data.isInstalled);
     getDom();
     otherAds();
   };
-///////////injecting normal DOM for showing ads/////////// 
+  ///////////injecting normal DOM for showing ads///////////
   const removeAdBlocker = () => {
     console.log("blockder stoppted");
 
@@ -262,28 +251,32 @@ setFirst(data.isInstalled);
         );
       }
     };
-   
-  adFunction();
-  }
+
+    adFunction();
+  };
 
   ////////receiving message from popup.js////////
-  chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  chrome.runtime.onMessage.addListener(function (
+    request,
+    sender,
+    sendResponse
+  ) {
     if (request.message == true) {
       chrome.storage.local.set({ isInstalled: true }, () => {
         console.log("Value is set true");
       });
-  window.location.reload();
+      window.location.reload();
     } else if (request.message == false) {
       chrome.storage.local.set({ isInstalled: false }, () => {
         console.log("Value is set to false");
       });
       window.location.reload();
-
     } else {
       return;
     }
+    sendResponse({ farewell: "Response from background script" });
   });
-  
+
   return <></>;
 };
 
