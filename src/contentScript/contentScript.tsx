@@ -65,10 +65,10 @@ const App: React.FC<{}> = () => {
       const observer = new MutationObserver(() => {
 
            // Call the function to collect the counts
-        const { counts, totalCount } = adFunction();
-    
-console.log(counts,"total counts")
-    console.log("Total Count:", totalCount);
+  adFunction();
+
+
+
       });
 
       const config = {
@@ -82,14 +82,9 @@ console.log(counts,"total counts")
     const adFunction = () => {
       const counts = {
         mainDocumentHiddenCount: 0,
-        playerOverlayHiddenCount: 0,
-        imageOverlayHiddenCount: 0,
-        textOverlayHiddenCount: 0,
-        playerAdsHiddenCount: 0,
         richGridRowHiddenCount: 0,
-        richGridRowAdsHiddenCount: 0,
         briefAdsHiddenCount: 0,
-        TwitchHiddenCount: 0,
+    
       };
     
       const mainDocument = document.getElementsByClassName(
@@ -131,7 +126,7 @@ console.log(counts,"total counts")
         handleSkipBtn();
     
         if (playerOverlay.length > 0) {
-          counts.playerOverlayHiddenCount++;
+      
           (playerOverlay[0] as HTMLElement).style.visibility = "hidden";
           for (let i = 0; i < videoDocument.length; i++) {
             if (
@@ -146,18 +141,18 @@ console.log(counts,"total counts")
           handleSkipBtn();
         }
         if (imageOverlay.length > 0) {
-          counts.imageOverlayHiddenCount++;
+      
           (imageOverlay[0] as HTMLElement).style.visibility = "hidden";
         }
       }
     
       if (playerAds) {
-        counts.playerAdsHiddenCount++;
+       
         (playerAds as HTMLElement).style.display = "none";
       }
     
       if (textOverlay.length > 0) {
-        counts.textOverlayHiddenCount++;
+      
         (textOverlay[0] as HTMLElement).style.display = "none";
       }
       if (richGridRow.length > 0) {
@@ -171,7 +166,7 @@ console.log(counts,"total counts")
         for (let i = 0; i < richGridRowAds.length; i++) {
           const adElement = richGridRowAds[i] as HTMLElement;
           adElement.style.setProperty("display", "none", "important");
-          counts.richGridRowAdsHiddenCount++;
+         
         }
       }
       if (briefAds.length > 0) {
@@ -185,7 +180,7 @@ console.log(counts,"total counts")
         for (let i = 0; i < Twitch.length; i++) {
           const adElement = Twitch[i] as HTMLElement;
           adElement.style.setProperty("display", "none", "important");
-          counts.TwitchHiddenCount++;
+        
         }
       }
     
@@ -196,8 +191,17 @@ console.log(counts,"total counts")
       // Return the counts and total count
       return { counts, totalCount };
     };
-    // Call the function to collect the counts
-
+    const { counts, totalCount } = adFunction();
+    chrome.storage.local.get("blockedAds", function (data) {
+      const previousBlockedAds = data.blockedAds || 0; 
+    
+  
+      const newBlockedAds = previousBlockedAds + totalCount;
+      chrome.storage.local.set({ blockedAds: newBlockedAds }, function () {
+        console.log("Blocked ads: " + newBlockedAds);
+      });
+    });
+    
     
     getDom();
     otherAds();
