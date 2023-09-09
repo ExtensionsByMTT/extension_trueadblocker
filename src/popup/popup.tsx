@@ -133,12 +133,12 @@ const AnimatedCircle = () => {
 const Header = (props) => {
   return (
     <div className="header">
-      <div>
-        <img src="./TrueAdBlocker128x128.png" alt="" height="80px" />
-      </div>
-      <div>
-        <h1>{props.title}</h1>
-      </div>
+      <img
+        src="./TrueAdBlocker128x128.svg"
+        alt="true-adblocker-logo"
+        className="true-adblocker-logo"
+      />
+      <h1>{props.title}</h1>
     </div>
   );
 };
@@ -201,74 +201,79 @@ const Loader = () => {
   ////////////////////////////////////////////
 
   return (
-    <div>
+    <>
       {isActiveYoutube === false ? (
-        <>
-          <Header title="TrueAdBlocker" />
-          <div style={{ marginTop: "45px" }}>
-            <h3 className="extHeading" style={{ fontSize: "25px" }}>
-              Connect to Block Ads On
-            </h3>
-            <h2 className="extHeading">Youtube,Twitch,And Malicious ads </h2>
+        <div className="first-screen">
+          <div className="first-screen-titles">
+            <h1>TrueAdBlocker</h1>
+            <p className="extHeading">
+              Connect to Block Ads On Youtube, Twitch, and Malicious ads{" "}
+            </p>
           </div>
-          <div className="main" onClick={tunOffAdBlc}>
-            <div id="ConnectionButton" className="disconnected">
-              <div className="staticOuterCircle"></div>
-              <div className="staticInnerCircle"></div>
-              <div className="staticBackground"></div>
-              <span className="title">Connect</span>
-            </div>
+          <button onClick={tunOffAdBlc} className="connect-btn">
+            Connect
+          </button>
+          <div className="first-screen-logo">
+            <p>
+              Powered By <br />{" "}
+              <span className="powered-by">True AdBlocker</span>
+            </p>
           </div>
-        </>
+        </div>
       ) : (
         <div className="main-connecting">
           {isConnecting ? (
-            <div className="loading-container">
-              <div className="loading"></div>
-              <div id="loading-text">Connecting...</div>
+            <div className="first-screen">
+              <div className="first-screen-titles">
+                <h1>TrueAdBlocker</h1>
+                <p className="extHeading">
+                  It is the best extension where you can enjoy all your videos
+                  without unnecessary ads.
+                </p>
+              </div>
+              <div className="connecting">
+                <div className="connecting-container">
+                  <div className="hourglassCurves"></div>
+                  <div className="hourglassCapTop"></div>
+                  <div className="hourglassGlassTop"></div>
+                  <div className="hourglassSand"></div>
+                  <div className="hourglassSandStream"></div>
+                  <div className="hourglassCapBottom"></div>
+                  <div className="hourglassGlass"></div>
+                </div>
+              </div>
+              <div className="first-screen-logo">
+                <p>
+                  Powered By <br />{" "}
+                  <span className="powered-by">True AdBlocker</span>
+                </p>
+              </div>
             </div>
           ) : (
             <>
               {isActiveYoutube ? (
-                <div className="main-dis">
-                  <div className="main-disconnect">
-                    <div
-                      id="ConnectionButton"
-                      className="connected"
-                      onClick={turnOnAdBlc}
-                    >
-                      <div className="staticOuterCircle"></div>
-                      <div className="staticInnerCircle"></div>
-                      <div className="staticBackground"></div>
-                      <span className="title">Stop</span>
+                <>
+                  <div className="first-screen">
+                    <div className="first-screen-titles">
+                      <h1>TrueAdBlocker</h1>
+                      <p className="extHeading">
+                        You can browse and enjoy all your videos without any
+                        unnecessary ads.
+                      </p>
                     </div>
-                  </div>
+                    <div className="count">Blocked 100+ Ads</div>
+                    <button onClick={turnOnAdBlc} className="connected-btn">
+                      Stop
+                    </button>
 
-                  <div className="features">
-                    <AnimatedCircle />
-                    <div style={{ padding: "0px 10px 0px 10px" }}>
-                      {" "}
-                      <div className="youtube">
-                        <h4>YouTube</h4>
-                        <span>
-                          <img src="./youtube.png"></img>{" "}
-                        </span>
-                      </div>
-                      <div className="twitch">
-                        <h4>Twitch</h4>
-                        <span>
-                          <img src="./twitch.png"></img>{" "}
-                        </span>
-                      </div>
-                      <div className="twitch">
-                        <h4>malicious ads</h4>
-                        <span>
-                          <img src="./malicious.png"></img>{" "}
-                        </span>
-                      </div>
+                    <div className="first-screen-logo">
+                      <p>
+                        Powered By <br />{" "}
+                        <span className="powered-by">True AdBlocker</span>
+                      </p>
                     </div>
                   </div>
-                </div>
+                </>
               ) : (
                 ""
               )}
@@ -276,10 +281,11 @@ const Loader = () => {
           )}
         </div>
       )}
-    </div>
+    </>
   );
 };
 
 const root = document.createElement("div");
+root.classList.add("true-adblocker-popoup");
 document.body.appendChild(root);
 ReactDOM.render(<App />, root);
