@@ -24,7 +24,7 @@ const App: React.FC<{}> = () => {
         console.log(first);
       }
     }, 10);
-  }, [first,window.location.href]);
+  }, [first]);
 
   
   ////////////////// removing YTs ads //////////////////////
@@ -63,9 +63,12 @@ const App: React.FC<{}> = () => {
     // selfObserver for ytADS///
     const selfObserver = (documentNode: HTMLElement) => {
       const observer = new MutationObserver(() => {
-        adFunction();
-       
+
+           // Call the function to collect the counts
+        const { counts, totalCount } = adFunction();
     
+console.log(counts,"total counts")
+    console.log("Total Count:", totalCount);
       });
 
       const config = {
@@ -193,16 +196,8 @@ const App: React.FC<{}> = () => {
       // Return the counts and total count
       return { counts, totalCount };
     };
-    
     // Call the function to collect the counts
-    const { counts, totalCount } = adFunction();
-    
-console.log(counts,"total counts")
-    console.log("Total Count:", totalCount);
-   
-    
-    // Call the function to collect the counts
-    adFunction();
+
     
     getDom();
     otherAds();
