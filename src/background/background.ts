@@ -9,7 +9,13 @@ chrome.runtime.onInstalled.addListener(function(details) {
 });
 
 
-
+// chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+//   if (message.totalBlockedCount !== undefined) {
+//     // Forward the message to the popup script
+//     // chrome.runtime.sendMessage({ totalBlockedCount: message.totalBlockedCount });
+//     chrome.storage.sync.set({totalBlockedAd : message.totalBlockedCount})
+//   }
+// });
 
 
 

@@ -5,6 +5,7 @@ import "./contentScript.css";
 
 const App: React.FC<{}> = () => {
   const [first, setFirst] = useState<boolean>();
+  // const [totalBlockedCount, setTotalBlockedCount] = useState(0);
 
   useEffect(() => {
     chrome.storage.local.get("isInstalled", function (data) {
@@ -13,6 +14,12 @@ const App: React.FC<{}> = () => {
       }
     });
   }, []);
+
+  // useEffect(() => {
+  //   chrome.runtime.sendMessage({
+  //     totalBlockedCount: totalBlockedCount,
+  //   });
+  // }, [totalBlockedCount]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -26,10 +33,14 @@ const App: React.FC<{}> = () => {
     }, 10);
   }, [first]);
 
-  
+  useEffect(() => {
+    chrome.storage.local.set({ blockedAds: 0 }, function () {
+      console.log("Local storage cleared.");
+    });
+  }, []);
+
   ////////////////// removing YTs ads //////////////////////
   const adAdBlocker = () => {
-
     console.log("adBlocker running");
     //blocking unwanted ads from some popular websites
     function otherAds() {
@@ -52,7 +63,6 @@ const App: React.FC<{}> = () => {
       }
     }
 
-   
     function getDom() {
       const targetNode =
         document.getElementById("movie_player") || document.body;
@@ -63,12 +73,8 @@ const App: React.FC<{}> = () => {
     // selfObserver for ytADS///
     const selfObserver = (documentNode: HTMLElement) => {
       const observer = new MutationObserver(() => {
-
-           // Call the function to collect the counts
-  adFunction();
-
-
-
+        // Call the function to collect the counts
+        adFunction();
       });
 
       const config = {
@@ -84,9 +90,8 @@ const App: React.FC<{}> = () => {
         mainDocumentHiddenCount: 0,
         richGridRowHiddenCount: 0,
         briefAdsHiddenCount: 0,
-    
       };
-    
+
       const mainDocument = document.getElementsByClassName(
         "video-ads ytp-ad-module"
       );
@@ -114,19 +119,18 @@ const App: React.FC<{}> = () => {
       const Twitch = document.getElementsByClassName(
         "Layout-sc-1xcs6mc-0 cDieGF default-panel"
       );
-    
+
       const handleSkipBtn = () => {
         if (skipBtn.length > 0) {
           (skipBtn[0] as HTMLButtonElement).click();
         }
       };
-    
+
       if (mainDocument.length > 0) {
         counts.mainDocumentHiddenCount++;
         handleSkipBtn();
-    
+
         if (playerOverlay.length > 0) {
-      
           (playerOverlay[0] as HTMLElement).style.visibility = "hidden";
           for (let i = 0; i < videoDocument.length; i++) {
             if (
@@ -141,18 +145,15 @@ const App: React.FC<{}> = () => {
           handleSkipBtn();
         }
         if (imageOverlay.length > 0) {
-      
           (imageOverlay[0] as HTMLElement).style.visibility = "hidden";
         }
       }
-    
+
       if (playerAds) {
-       
         (playerAds as HTMLElement).style.display = "none";
       }
-    
+
       if (textOverlay.length > 0) {
-      
         (textOverlay[0] as HTMLElement).style.display = "none";
       }
       if (richGridRow.length > 0) {
@@ -166,7 +167,6 @@ const App: React.FC<{}> = () => {
         for (let i = 0; i < richGridRowAds.length; i++) {
           const adElement = richGridRowAds[i] as HTMLElement;
           adElement.style.setProperty("display", "none", "important");
-         
         }
       }
       if (briefAds.length > 0) {
@@ -180,32 +180,31 @@ const App: React.FC<{}> = () => {
         for (let i = 0; i < Twitch.length; i++) {
           const adElement = Twitch[i] as HTMLElement;
           adElement.style.setProperty("display", "none", "important");
-        
         }
       }
-    
+
       // Calculate the total count
-      const totalCount =
-        Object.values(counts).reduce((total, count) => total + count, 0);
-    
+      const totalCount = Object.values(counts).reduce(
+        (total, count) => total + count,
+        0
+      );
+
       // Return the counts and total count
       return { counts, totalCount };
     };
     const { counts, totalCount } = adFunction();
     chrome.storage.local.get("blockedAds", function (data) {
-      const previousBlockedAds = data.blockedAds || 0; 
-    
-  
+      const previousBlockedAds = data.blockedAds || 0;
+
       const newBlockedAds = previousBlockedAds + totalCount;
       chrome.storage.local.set({ blockedAds: newBlockedAds }, function () {
         console.log("Blocked ads: " + newBlockedAds);
+        // setTotalBlockedCount(newBlockedAds);
       });
     });
-    
-    
+
     getDom();
     otherAds();
- 
   };
   ///////////injecting normal DOM for showing ads///////////
   const removeAdBlocker = () => {
