@@ -5,16 +5,7 @@ import "./popup.css";
 const App: React.FC<{}> = () => {
   const [blockedCount, setBlockedCount] = useState(0);
 
-  // chrome.runtime.onMessage.addListener(function (
-  //   message,
-  //   sender,
-  //   sendResponse
-  // ) {
-  //   if (message.totalBlockedCount) {
-  //     setBlockedCount(message.totalBlockedCount);
-  //     console.log("Total Blocked Ad : ", message.totalBlockedCount);
-  //   }
-  // });
+
 
   useEffect(() => {
     chrome.storage.local.get("blockedAds", function (result) {
@@ -128,12 +119,7 @@ const Loader = ({ blockedCount }) => {
                   <div className="hourglassGlass"></div>
                 </div>
               </div>
-              <div className="first-screen-logo">
-                <p>
-                  Powered By <br />{" "}
-                  <span className="powered-by">True AdBlocker</span>
-                </p>
-              </div>
+              
             </div>
           ) : (
             <>
@@ -147,17 +133,10 @@ const Loader = ({ blockedCount }) => {
                         unnecessary ads.
                       </p>
                     </div>
-                    <div className="count">Blocked {blockedCount}+ Ads</div>
+                    <div className="count">Total Ads Blocked : {blockedCount>0?blockedCount:0}</div>
                     <button onClick={turnOnAdBlc} className="connected-btn">
                       Stop
                     </button>
-
-                    <div className="first-screen-logo">
-                      <p>
-                        Powered By <br />{" "}
-                        <span className="powered-by">True AdBlocker</span>
-                      </p>
-                    </div>
                   </div>
                 </>
               ) : (

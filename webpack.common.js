@@ -6,6 +6,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 module.exports = {
   entry: {
     popup: path.resolve("src/popup/popup.tsx"),
+    popup: path.resolve("src/popup/popup.tsx"),
     options: path.resolve("src/options/options.tsx"),
     background: path.resolve("src/background/background.ts"),
     contentScript: path.resolve("src/contentScript/contentScript.tsx"),
@@ -15,6 +16,7 @@ module.exports = {
     adsSweetalertSpotify: path.resolve("src/Spotify/sweetalert.min.js"),
     adsAdsRemoveSpotify: path.resolve("src/Spotify/ads_removal.js"),
     adswsHooksSpotify: path.resolve("src/Spotify/wsHook.js"),
+    Youtube:path.resolve("src/Youtube/Youtube.tsx")
   },
   module: {
     rules: [
@@ -57,7 +59,17 @@ module.exports = {
   optimization: {
     splitChunks: {
       chunks(chunk) {
-        return chunk.name !== "contentScript" && chunk.name !== "background";
+        const excludedChunks = [
+          "contentScript",
+          "adRemove",
+          "removeTwitchAds",
+          "contentScriptSpotify",
+          "adsSweetalertSpotify",
+          "adsAdsRemoveSpotify",
+          "adswsHooksSpotify",
+          "Youtube"
+        ];
+        return !excludedChunks.includes(chunk.name);
       },
     },
   },

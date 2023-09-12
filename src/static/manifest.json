@@ -42,7 +42,12 @@
       "matches": ["https://open.spotify.com/*"],
       "js": ["contentScriptSpotify.js"],
       "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["Youtube.js"]
     }
+
   ],
   "web_accessible_resources": [
     {
