@@ -105,7 +105,27 @@ const App: React.FC<{}> = () => {
   }, [getUrl]);
   
   
-  
+   ////////receiving message from popup.js////////
+   chrome.runtime.onMessage.addListener(function (
+    request,
+    sender,
+    sendResponse
+  ) {
+    if (request.message == true) {
+      chrome.storage.local.set({ isInstalled: true }, () => {
+        console.log("Value is set true");
+      });
+      window.location.reload();
+    } else if (request.message == false) {
+      chrome.storage.local.set({ isInstalled: false }, () => {
+        console.log("Value is set to false");
+      });
+      window.location.reload();
+    } else {
+      return;
+    }
+    sendResponse({ farewell: "Response from background script" });
+  });
 
   return <>
   <Tab/>
