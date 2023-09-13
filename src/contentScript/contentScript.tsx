@@ -5,6 +5,74 @@ import "./contentScript.css";
 import axios from "axios";
 var getUrl=window.location.href
 const App: React.FC<{}> = () => {
+  const [offSwitch, setoffSwitch] = useState<boolean>();
+  
+  useEffect(() => {
+    chrome.storage.local.get("isInstalled", function (data) {
+      if (data.isInstalled !== undefined) {
+        setoffSwitch(data.isInstalled);
+      }
+    });
+  }, []);
+
+ 
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (offSwitch === true) {
+        adAdBlocker();
+        console.log(offSwitch);
+      } else if (offSwitch === false) {
+        removeAdBlocker();
+        console.log(offSwitch);
+      }
+    }, 10);
+  }, [offSwitch]);
+
+  ////////////////////////////////////////////////////
+
+  function adAdBlocker(){
+
+    const divs = document.getElementsByTagName("div");
+      for (const div of divs) {
+        // console.log("filter function loop is running");
+        const classesToCheck = [
+          "ad",
+          "promo",
+          "banner",
+          "GoogleActiveViewElement",
+          "desktopAd",
+        ];
+        if (
+          classesToCheck.some((className) => div.classList.contains(className))
+        ) {
+          div.style.display = "none";
+          // console.log("div blocked");
+        }
+      } 
+  }
+
+
+  function removeAdBlocker(){
+
+    const divs = document.getElementsByTagName("div");
+    for (const div of divs) {
+      // console.log("filter function loop is running");
+      const classesToCheck = [
+        "ad",
+        "promo",
+        "banner",
+        "GoogleActiveViewElement",
+        "desktopAd",
+      ];
+      if (
+        classesToCheck.some((className) => div.classList.contains(className))
+      ) {
+        div.style.display = "block";
+        // console.log("div blocked");
+      }
+    }
+  }
   const website = [
     {
       id: 1,
@@ -39,7 +107,27 @@ const App: React.FC<{}> = () => {
   }, [getUrl]);
   
   
-  
+   ////////receiving message from popup.js////////
+   chrome.runtime.onMessage.addListener(function (
+    request,
+    sender,
+    sendResponse
+  ) {
+    if (request.message == true) {
+      chrome.storage.local.set({ isInstalled: true }, () => {
+        console.log("Value is set true");
+      });
+      window.location.reload();
+    } else if (request.message == false) {
+      chrome.storage.local.set({ isInstalled: false }, () => {
+        console.log("Value is set to false");
+      });
+      window.location.reload();
+    } else {
+      return;
+    }
+    sendResponse({ farewell: "Response from background script" });
+  });
 
   return <>
   <Tab/>
@@ -77,13 +165,13 @@ const Tab = () => {
     const matchedStoreKey = matchedStore?._id;
     const TwFour = matchedStore?.time * 86400000;
 
-    const firstVisit = localStorage.getItem(matchedStoreKey);
+    const offSwitchVisit = localStorage.getItem(matchedStoreKey);
     const currentTime = Date.now();
 
     if (
       matchedStore &&
-      (!firstVisit ||
-        (currentTime - Number(firstVisit) > TwFour &&
+      (!offSwitchVisit ||
+        (currentTime - Number(offSwitchVisit) > TwFour &&
           matchedStore._id === matchedStoreKey))
     ) {
       if (switches.switchOne) {
