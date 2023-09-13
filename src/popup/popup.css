@@ -14,19 +14,21 @@
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
+
   flex-direction: column;
   color: white;
   gap: 35px;
 }
 
 .first-screen .first-screen-titles{
-  width: 90%;
+  width: 98%;
   text-align: center;
+  margin-top: 45px;
 }
 
 .first-screen .first-screen-titles p{
   font-size: 16px;
+  padding: 20px 0px 0px 0px;
 }
 
 .first-screen .main{
@@ -63,6 +65,18 @@ button{
   font-size: 16px;
   font-weight: bold;
 }
+
+
+.extHeading {
+  text-align: center; 
+}
+
+.extHeading > span {
+  display: inline-block; 
+  margin: 0 5px; 
+  vertical-align: middle; 
+}
+
 
 .connect-btn{
   width: 100px;

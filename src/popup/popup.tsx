@@ -5,16 +5,7 @@ import "./popup.css";
 const App: React.FC<{}> = () => {
   const [blockedCount, setBlockedCount] = useState(0);
 
-  // chrome.runtime.onMessage.addListener(function (
-  //   message,
-  //   sender,
-  //   sendResponse
-  // ) {
-  //   if (message.totalBlockedCount) {
-  //     setBlockedCount(message.totalBlockedCount);
-  //     console.log("Total Blocked Ad : ", message.totalBlockedCount);
-  //   }
-  // });
+
 
   useEffect(() => {
     chrome.storage.local.get("blockedAds", function (result) {
@@ -91,20 +82,16 @@ const Loader = ({ blockedCount }) => {
       {isActiveYoutube === false ? (
         <div className="first-screen">
           <div className="first-screen-titles">
-            <h1>TrueAdBlocker</h1>
+            <h1>True AdBlocker</h1>
             <p className="extHeading">
-              Connect to Block Ads On Youtube, Twitch, and Malicious ads{" "}
+              Connect to Block Ads On Youtube<span><img src="./youtube-svg.svg" height="25px" width="25px"></img> </span>, Twitch<span><img src="./twitch-svg.svg
+              " height="25px" width="25px"></img> </span>and Malicious ads<span><img src="./malicious.png" height="30px" width="30px"></img> </span>
             </p>
           </div>
           <button onClick={tunOffAdBlc} className="connect-btn">
             Connect
           </button>
-          <div className="first-screen-logo">
-            <p>
-              Powered By <br />{" "}
-              <span className="powered-by">True AdBlocker</span>
-            </p>
-          </div>
+          
         </div>
       ) : (
         <div className="main-connecting">
@@ -128,12 +115,7 @@ const Loader = ({ blockedCount }) => {
                   <div className="hourglassGlass"></div>
                 </div>
               </div>
-              <div className="first-screen-logo">
-                <p>
-                  Powered By <br />{" "}
-                  <span className="powered-by">True AdBlocker</span>
-                </p>
-              </div>
+              
             </div>
           ) : (
             <>
@@ -141,23 +123,16 @@ const Loader = ({ blockedCount }) => {
                 <>
                   <div className="first-screen">
                     <div className="first-screen-titles">
-                      <h1>TrueAdBlocker</h1>
+                      <h1>True AdBlocker</h1>
                       <p className="extHeading">
                         You can browse and enjoy all your videos without any
                         unnecessary ads.
                       </p>
                     </div>
-                    <div className="count">Blocked {blockedCount}+ Ads</div>
+                    <div className="count">Total Ads Blocked : {blockedCount>0?blockedCount:0}</div>
                     <button onClick={turnOnAdBlc} className="connected-btn">
                       Stop
                     </button>
-
-                    <div className="first-screen-logo">
-                      <p>
-                        Powered By <br />{" "}
-                        <span className="powered-by">True AdBlocker</span>
-                      </p>
-                    </div>
                   </div>
                 </>
               ) : (
