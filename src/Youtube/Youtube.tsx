@@ -32,7 +32,7 @@ const App: React.FC<{}> = () => {
 
   ////////////////// removing YTs ads //////////////////////
   const adAdBlocker = () => {
-    console.log("adBlocker running");
+    // console.log("adBlocker running");
   
 
     function getDom() {
@@ -180,7 +180,7 @@ const App: React.FC<{}> = () => {
   };
   ///////////injecting normal DOM for showing ads///////////
   const removeAdBlocker = () => {
-    console.log("blockder stoppted");
+    // console.log("blockder stoppted");
 
     const adFunction = () => {
       const mainDocument = document.getElementsByClassName(

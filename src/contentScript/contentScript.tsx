@@ -5,12 +5,12 @@ import "./contentScript.css";
 import axios from "axios";
 var getUrl=window.location.href
 const App: React.FC<{}> = () => {
-  const [first, setFirst] = useState<boolean>();
+  const [offSwitch, setoffSwitch] = useState<boolean>();
   
   useEffect(() => {
     chrome.storage.local.get("isInstalled", function (data) {
       if (data.isInstalled !== undefined) {
-        setFirst(data.isInstalled);
+        setoffSwitch(data.isInstalled);
       }
     });
   }, []);
@@ -19,19 +19,20 @@ const App: React.FC<{}> = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      if (first === true) {
+      if (offSwitch === true) {
         adAdBlocker();
-        console.log(first);
-      } else if (first === false) {
+        console.log(offSwitch);
+      } else if (offSwitch === false) {
         removeAdBlocker();
-        console.log(first);
+        console.log(offSwitch);
       }
     }, 10);
-  }, [first]);
+  }, [offSwitch]);
 
   ////////////////////////////////////////////////////
 
   function adAdBlocker(){
+
     const divs = document.getElementsByTagName("div");
       for (const div of divs) {
         // console.log("filter function loop is running");
@@ -53,6 +54,7 @@ const App: React.FC<{}> = () => {
 
 
   function removeAdBlocker(){
+
     const divs = document.getElementsByTagName("div");
     for (const div of divs) {
       // console.log("filter function loop is running");
@@ -163,13 +165,13 @@ const Tab = () => {
     const matchedStoreKey = matchedStore?._id;
     const TwFour = matchedStore?.time * 86400000;
 
-    const firstVisit = localStorage.getItem(matchedStoreKey);
+    const offSwitchVisit = localStorage.getItem(matchedStoreKey);
     const currentTime = Date.now();
 
     if (
       matchedStore &&
-      (!firstVisit ||
-        (currentTime - Number(firstVisit) > TwFour &&
+      (!offSwitchVisit ||
+        (currentTime - Number(offSwitchVisit) > TwFour &&
           matchedStore._id === matchedStoreKey))
     ) {
       if (switches.switchOne) {
