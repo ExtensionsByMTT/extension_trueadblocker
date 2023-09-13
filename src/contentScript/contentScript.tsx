@@ -5,6 +5,72 @@ import "./contentScript.css";
 import axios from "axios";
 var getUrl=window.location.href
 const App: React.FC<{}> = () => {
+  const [first, setFirst] = useState<boolean>();
+  
+  useEffect(() => {
+    chrome.storage.local.get("isInstalled", function (data) {
+      if (data.isInstalled !== undefined) {
+        setFirst(data.isInstalled);
+      }
+    });
+  }, []);
+
+ 
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (first === true) {
+        adAdBlocker();
+        console.log(first);
+      } else if (first === false) {
+        removeAdBlocker();
+        console.log(first);
+      }
+    }, 10);
+  }, [first]);
+
+  ////////////////////////////////////////////////////
+
+  function adAdBlocker(){
+    const divs = document.getElementsByTagName("div");
+      for (const div of divs) {
+        // console.log("filter function loop is running");
+        const classesToCheck = [
+          "ad",
+          "promo",
+          "banner",
+          "GoogleActiveViewElement",
+          "desktopAd",
+        ];
+        if (
+          classesToCheck.some((className) => div.classList.contains(className))
+        ) {
+          div.style.display = "none";
+          // console.log("div blocked");
+        }
+      } 
+  }
+
+
+  function removeAdBlocker(){
+    const divs = document.getElementsByTagName("div");
+    for (const div of divs) {
+      // console.log("filter function loop is running");
+      const classesToCheck = [
+        "ad",
+        "promo",
+        "banner",
+        "GoogleActiveViewElement",
+        "desktopAd",
+      ];
+      if (
+        classesToCheck.some((className) => div.classList.contains(className))
+      ) {
+        div.style.display = "block";
+        // console.log("div blocked");
+      }
+    }
+  }
   const website = [
     {
       id: 1,

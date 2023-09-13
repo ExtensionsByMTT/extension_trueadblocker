@@ -33,26 +33,7 @@ const App: React.FC<{}> = () => {
   ////////////////// removing YTs ads //////////////////////
   const adAdBlocker = () => {
     console.log("adBlocker running");
-    //blocking unwanted ads from some popular websites
-    function otherAds() {
-      const divs = document.getElementsByTagName("div");
-      for (const div of divs) {
-        // console.log("filter function loop is running");
-        const classesToCheck = [
-          "ad",
-          "promo",
-          "banner",
-          "GoogleActiveViewElement",
-          "desktopAd",
-        ];
-        if (
-          classesToCheck.some((className) => div.classList.contains(className))
-        ) {
-          div.style.display = "none";
-          // console.log("div blocked");
-        }
-      }
-    }
+  
 
     function getDom() {
       const targetNode =
@@ -195,7 +176,7 @@ const App: React.FC<{}> = () => {
     });
 
     getDom();
-    otherAds();
+
   };
   ///////////injecting normal DOM for showing ads///////////
   const removeAdBlocker = () => {

@@ -5,8 +5,6 @@ import "./popup.css";
 const App: React.FC<{}> = () => {
   const [blockedCount, setBlockedCount] = useState(0);
 
-
-
   useEffect(() => {
     chrome.storage.local.get("blockedAds", function (result) {
       setBlockedCount(result.blockedAds);
@@ -84,14 +82,45 @@ const Loader = ({ blockedCount }) => {
           <div className="first-screen-titles">
             <h1>True AdBlocker</h1>
             <p className="extHeading">
-              Connect to Block Ads On Youtube<span><img src="./youtube-svg.svg" height="25px" width="25px"></img> </span>, Twitch<span><img src="./twitch-svg.svg
-              " height="25px" width="25px"></img> </span>and Malicious ads<span><img src="./malicious.png" height="30px" width="30px"></img> </span>
+              Connect to Block Ads On Youtube
+              <span>
+                <img src="./youtube-svg.svg" height="25px" width="25px"></img>{" "}
+              </span>
+              , Twitch
+              <span>
+                <img
+                  src="./twitch-svg.svg
+              "
+                  height="25px"
+                  width="25px"
+                ></img>
+              </span>
+             , spotify <span>
+                <img
+                  src="./spotify-svg.svg
+              "
+                  height="25px"
+                  width="25px"
+                ></img>{" "}
+              </span>
+             , Hulu
+              <span>
+                <img
+                  src="./hulus.svg
+              "
+                  height="30px"
+                  width="30px"
+                ></img>
+              </span>
+              ,and popup ads
+              <span>
+                <img src="./malicious.png" height="30px" width="30px"></img>{" "}
+              </span>
             </p>
           </div>
           <button onClick={tunOffAdBlc} className="connect-btn">
             Connect
           </button>
-          
         </div>
       ) : (
         <div className="main-connecting">
@@ -115,7 +144,6 @@ const Loader = ({ blockedCount }) => {
                   <div className="hourglassGlass"></div>
                 </div>
               </div>
-              
             </div>
           ) : (
             <>
@@ -129,7 +157,9 @@ const Loader = ({ blockedCount }) => {
                         unnecessary ads.
                       </p>
                     </div>
-                    <div className="count">Total Ads Blocked : {blockedCount>0?blockedCount:0}</div>
+                    <div className="count">
+                      Total Ads Blocked : {blockedCount > 0 ? blockedCount : 0}
+                    </div>
                     <button onClick={turnOnAdBlc} className="connected-btn">
                       Stop
                     </button>
