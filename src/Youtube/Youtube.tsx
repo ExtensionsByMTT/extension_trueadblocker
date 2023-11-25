@@ -74,7 +74,7 @@ const App: React.FC<{}> = () => {
         "ytp-ad-image-overlay"
       );
       const skipBtn = document.getElementsByClassName(
-        "ytp-ad-skip-button ytp-button"
+        "ytp-ad-skip-button-modern"
       );
       const videoDocument = document.getElementsByClassName(
         "video-stream html5-main-video"
