@@ -67,7 +67,7 @@ module.exports = {
           "adsSweetalertSpotify",
           "adsAdsRemoveSpotify",
           "adswsHooksSpotify",
-          "Youtube"
+          "Youtube",
         ];
         return !excludedChunks.includes(chunk.name);
       },
