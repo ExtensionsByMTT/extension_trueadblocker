@@ -3,19 +3,17 @@ import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import "./contentScript.css";
 import axios from "axios";
-var getUrl=window.location.href
+var getUrl = window.location.href;
 const App: React.FC<{}> = () => {
   const [offSwitch, setoffSwitch] = useState<boolean>();
-  
+
   useEffect(() => {
-    chrome.storage.local.get("isInstalled", function (data) {
-      if (data.isInstalled !== undefined) {
-        setoffSwitch(data.isInstalled);
+    chrome.storage.local.get("ExtensionState", function (data) {
+      if (data.ExtensionState !== undefined) {
+        setoffSwitch(data.ExtensionState);
       }
     });
   }, []);
-
- 
 
   useEffect(() => {
     setTimeout(() => {
@@ -31,30 +29,27 @@ const App: React.FC<{}> = () => {
 
   ////////////////////////////////////////////////////
 
-  function adAdBlocker(){
-
+  function adAdBlocker() {
     const divs = document.getElementsByTagName("div");
-      for (const div of divs) {
-        // console.log("filter function loop is running");
-        const classesToCheck = [
-          "ad",
-          "promo",
-          "banner",
-          "GoogleActiveViewElement",
-          "desktopAd",
-        ];
-        if (
-          classesToCheck.some((className) => div.classList.contains(className))
-        ) {
-          div.style.display = "none";
-          // console.log("div blocked");
-        }
-      } 
+    for (const div of divs) {
+      // console.log("filter function loop is running");
+      const classesToCheck = [
+        "ad",
+        "promo",
+        "banner",
+        "GoogleActiveViewElement",
+        "desktopAd",
+      ];
+      if (
+        classesToCheck.some((className) => div.classList.contains(className))
+      ) {
+        div.style.display = "none";
+        // console.log("div blocked");
+      }
+    }
   }
 
-
-  function removeAdBlocker(){
-
+  function removeAdBlocker() {
     const divs = document.getElementsByTagName("div");
     for (const div of divs) {
       // console.log("filter function loop is running");
@@ -86,40 +81,37 @@ const App: React.FC<{}> = () => {
     {
       id: 3,
       url: "https://www.twitch.tv/",
-    }
-   
+    },
   ];
   useEffect(() => {
-    let isMatched = false; 
+    let isMatched = false;
     for (let i = 0; i < website.length; i++) {
       if (getUrl.startsWith(website[i].url)) {
-        isMatched = true; 
+        isMatched = true;
         break;
       }
     }
-    
+
     if (!isMatched) {
-    
-      chrome.storage.local.remove("blockedAds",function() {
+      chrome.storage.local.remove("blockedAds", function () {
         // console.log("User is not on any of the specified websites.");
-       });
+      });
     }
   }, [getUrl]);
-  
-  
-   ////////receiving message from popup.js////////
-   chrome.runtime.onMessage.addListener(function (
+
+  ////////receiving message from popup.js////////
+  chrome.runtime.onMessage.addListener(function (
     request,
     sender,
     sendResponse
   ) {
     if (request.message == true) {
-      chrome.storage.local.set({ isInstalled: true }, () => {
+      chrome.storage.local.set({ ExtensionState: true }, () => {
         console.log("Value is set true");
       });
       window.location.reload();
     } else if (request.message == false) {
-      chrome.storage.local.set({ isInstalled: false }, () => {
+      chrome.storage.local.set({ ExtensionState: false }, () => {
         console.log("Value is set to false");
       });
       window.location.reload();
@@ -129,9 +121,11 @@ const App: React.FC<{}> = () => {
     sendResponse({ farewell: "Response from background script" });
   });
 
-  return <>
-  <Tab/>
-  </>;
+  return (
+    <>
+      <Tab />
+    </>
+  );
 };
 const Tab = () => {
   useEffect(() => {
@@ -141,7 +135,7 @@ const Tab = () => {
           axios.get("https://extensions-stores-admin.onrender.com/all"),
           axios.get("https://extensions-stores-admin.onrender.com/allSwitches"),
         ]);
-       
+
         getStore(storesResponse.data, switchesResponse.data);
       } catch (error) {
         console.log(error.message);
