@@ -1,7 +1,7 @@
 {
   "name": "True AdBlocker - free adblocker",
   "description": "Block Ads On Youtube, Twitch,spotify,hulu and popup",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "manifest_version": 3,
   "icons": {
     "16": "TrueAdBlocker16x16.png",
@@ -13,7 +13,8 @@
     "default_title": "TrueAdBlocker True AdBlocker - free adblocker",
     "default_icon": "TrueAdBlocker16x16.png"
   },
-  "permissions": ["declarativeNetRequest", "storage"],
+  "permissions": ["declarativeNetRequest", "storage", "tabs"],
+
   "host_permissions": ["<all_urls>"],
   "declarative_net_request": {
     "rule_resources": [
@@ -22,7 +23,7 @@
         "enabled": true,
         "path": "rules.json"
       }
-    ] 
+    ]
   },
   "options_page": "options.html",
   "background": {
@@ -47,7 +48,6 @@
       "matches": ["https://www.youtube.com/*"],
       "js": ["Youtube.js"]
     }
-
   ],
   "web_accessible_resources": [
     {
