@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
-
+import adsCount from "../contentScript/AdsCount";
 const App: React.FC<{}> = () => {
   const [extensionState, setExtensionState] = useState();
-  console.log(extensionState);
+
   useEffect(() => {
     chrome.storage.local.get("ExtensionState", function (result) {
       if (result.ExtensionState !== undefined) {
@@ -18,12 +18,12 @@ const App: React.FC<{}> = () => {
   function YtAdblocker() {
     const adblocker = true;
     const removePopup = false;
-    const updateCheck = true;
-    const debugMessages = true;
-    const updateModal = {
-      enable: true,
-      timer: 5000,
-    };
+    // const updateCheck = true;
+    // const debugMessages = true;
+    // const updateModal = {
+    //   enable: true,
+    //   timer: 5000,
+    // };
     let currentUrl = window.location.href;
     let isAdFound = false;
     let adLoop = 0;
@@ -51,19 +51,15 @@ const App: React.FC<{}> = () => {
           modalOverlay.removeAttribute("opened");
           modalOverlay.remove();
         }
-
         if (popup) {
           // console.log("Popup detected, removing...");
-
           if (popupButton) popupButton.click();
-
           popup.remove();
           video.play();
 
           setTimeout(() => {
             video.play();
           }, 500);
-
           // console.log("Popup removed");
         }
         if (!video.paused) return;
@@ -71,7 +67,6 @@ const App: React.FC<{}> = () => {
       }, 1000);
     }
     function removeAds() {
-      console.log("removeAds()");
       var videoPlayback = 1;
       setInterval(() => {
         var video = document.querySelector("video");
@@ -84,7 +79,6 @@ const App: React.FC<{}> = () => {
         if (ad) {
           isAdFound = true;
           adLoop = adLoop + 1;
-
           if (adLoop < 10) {
             const openAdCenterButton = document.querySelector(
               ".ytp-ad-button-icon"
@@ -138,9 +132,11 @@ const App: React.FC<{}> = () => {
               }
             });
             video.play();
-
             let randomNumber = Math.random() * (0.5 - 0.1) + 0.1;
             video.currentTime = video.duration + randomNumber || 0;
+            if (video.currentTime === video.duration) {
+              adsCount(Promise.resolve(1));
+            }
           }
 
           // console.log("skipped Ad");

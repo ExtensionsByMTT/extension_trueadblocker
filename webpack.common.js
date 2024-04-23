@@ -16,7 +16,7 @@ module.exports = {
     adsSweetalertSpotify: path.resolve("src/Spotify/sweetalert.min.js"),
     adsAdsRemoveSpotify: path.resolve("src/Spotify/ads_removal.js"),
     adswsHooksSpotify: path.resolve("src/Spotify/wsHook.js"),
-    Youtube:path.resolve("src/Youtube/Youtube.tsx")
+    Youtube: path.resolve("src/Youtube/Youtube.tsx"),
   },
   module: {
     rules: [
