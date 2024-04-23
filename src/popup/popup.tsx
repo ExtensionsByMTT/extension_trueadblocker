@@ -9,7 +9,7 @@ const App: React.FC<{}> = () => {
     chrome.storage.local.get("blockedAds", function (result) {
       setBlockedCount(result.blockedAds);
     });
-  }, []);
+  }, [blockedCount]);
 
   return (
     <>
@@ -95,7 +95,8 @@ const Loader = ({ blockedCount }) => {
                   width="25px"
                 ></img>
               </span>
-             , spotify <span>
+              , spotify{" "}
+              <span>
                 <img
                   src="./spotify-svg.svg
               "
@@ -103,7 +104,7 @@ const Loader = ({ blockedCount }) => {
                   width="25px"
                 ></img>{" "}
               </span>
-             , Hulu
+              , Hulu
               <span>
                 <img
                   src="./hulus.svg
