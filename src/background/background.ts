@@ -29,3 +29,10 @@ chrome.runtime.onInstalled.addListener((details) => {
       break;
   }
 });
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.status == "complete" && tab.url) {
+    console.log("Clearing extension state!");
+    chrome.storage.local.set({ DOMLOAD: true });
+  }
+});
