@@ -88,14 +88,13 @@ const App: React.FC<{}> = () => {
     } else {
       return;
     }
+    if (request.action === "DOMLOADED") {
+      console.log("DOMLOADED");
+    }
     sendResponse({ farewell: "Response from background script" });
   });
 
-  return (
-    <>
-    
-    </>
-  );
+  return <></>;
 };
 
 const root = document.createElement("div");

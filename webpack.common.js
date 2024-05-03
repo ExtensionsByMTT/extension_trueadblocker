@@ -17,7 +17,7 @@ module.exports = {
     adsAdsRemoveSpotify: path.resolve("src/Spotify/ads_removal.js"),
     adswsHooksSpotify: path.resolve("src/Spotify/wsHook.js"),
     Youtube: path.resolve("src/Youtube/Youtube.tsx"),
-    facebook: path.resolve("src/facebook/Facebook.tsx"),
+    sponsered: path.resolve("src/facebook/Sponser.tsx"),
   },
   module: {
     rules: [
@@ -69,7 +69,7 @@ module.exports = {
           "adsAdsRemoveSpotify",
           "adswsHooksSpotify",
           "Youtube",
-          "facebook",
+          "sponsered",
         ];
         return !excludedChunks.includes(chunk.name);
       },

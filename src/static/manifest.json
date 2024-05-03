@@ -32,7 +32,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["contentScript.js", "facebook.js"]
+      "js": ["contentScript.js", "sponsered.js"]
     },
     {
       "matches": ["https://*.twitch.tv/*"],
@@ -48,17 +48,7 @@
       "matches": ["https://www.youtube.com/*"],
       "js": ["Youtube.js"]
     }
-    // {
-    //   "matches": ["https://www.facebook.com/*"],
-    //   "js": ["facebook.js"]
-    // }
   ],
-
-  "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'",
-    "script-src": ["'self'", "https://www.facebook.com"],
-    "worker-src": "'self' blob:"
-  },
 
   "web_accessible_resources": [
     {
