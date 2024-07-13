@@ -142,7 +142,7 @@ const App: React.FC<{}> = () => {
             });
             video.play();
             let randomNumber = Math.random() * (0.5 - 0.1) + 0.1;
-            video.currentTime = video.duration + randomNumber || 0;
+            video.currentTime = video.duration + randomNumber;
             if (video.currentTime === video.duration) {
               adsCount(Promise.resolve(1));
             }
