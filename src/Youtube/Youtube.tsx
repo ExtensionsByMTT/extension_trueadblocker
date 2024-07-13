@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import adsCount from "../contentScript/AdsCount";
+
 const App: React.FC<{}> = () => {
   const [extensionState, setExtensionState] = useState();
-
+  
   useEffect(() => {
     chrome.storage.local.get("ExtensionState", function (result) {
       if (result.ExtensionState !== undefined) {
@@ -16,6 +17,7 @@ const App: React.FC<{}> = () => {
   }, [extensionState]);
 
   function YtAdblocker() {
+
     const adblocker = true;
     const removePopup = false;
     // const updateCheck = true;
@@ -67,6 +69,7 @@ const App: React.FC<{}> = () => {
       }, 1000);
     }
     function removeAds() {
+
       var videoPlayback = 1;
       setInterval(() => {
         var video = document.querySelector("video");
@@ -119,6 +122,7 @@ const App: React.FC<{}> = () => {
             ".ytp-ad-skip-button-modern",
             ".ytp-ad-skip-button",
             ".ytp-ad-skip-button-slot",
+            ".ytp-ad-text"
           ];
           if (video) {
             video.playbackRate = 8.0;
@@ -126,6 +130,7 @@ const App: React.FC<{}> = () => {
             skipButtons.forEach((selector) => {
               const elements = document.querySelectorAll(selector);
               if (elements && elements.length > 0) {
+              console.log(elements,"Elements Found")
                 elements.forEach((element) => {
                   (element as HTMLElement).click();
                 });
@@ -133,13 +138,13 @@ const App: React.FC<{}> = () => {
             });
             video.play();
             let randomNumber = Math.random() * (0.5 - 0.1) + 0.1;
-            video.currentTime = video.duration + randomNumber || 0;
+            video.currentTime = (video.duration + randomNumber)||0;
             if (video.currentTime === video.duration) {
               adsCount(Promise.resolve(1));
             }
           }
 
-          // console.log("skipped Ad");
+          console.log("skipped Ad");
         } else {
           if (video && video?.playbackRate == 8.0) {
             video.playbackRate = videoPlayback;
@@ -154,14 +159,14 @@ const App: React.FC<{}> = () => {
             if (video) videoPlayback = video.playbackRate;
           }
         }
-      }, 50);
+      }, 300);
 
       removePageAds();
     }
 
     function removePageAds() {
       const sponsor = document.querySelectorAll(
-        "div#player-ads.style-scope.ytd-watch-flexy, div#panels.style-scope.ytd-watch-flexy"
+        "div#player-ads.style-scope.ytd-watch-flexy, ytd-merch-shelf-renderer, div#panels.style-scope.ytd-watch-flexy"
       );
       const style = document.createElement("style");
 
@@ -188,6 +193,7 @@ const App: React.FC<{}> = () => {
               ytm-promoted-sparkles-web-renderer,
               masthead-ad,
               tp-yt-iron-overlay-backdrop,
+              ytd-merch-shelf-renderer,
   
               #masthead-ad {
                   display: none !important;
