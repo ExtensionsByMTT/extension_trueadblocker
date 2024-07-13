@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import adsCount from "../contentScript/AdsCount";
+
 const App: React.FC<{}> = () => {
   const [extensionState, setExtensionState] = useState();
-
   useEffect(() => {
     chrome.storage.local.get("ExtensionState", function (result) {
       if (result.ExtensionState !== undefined) {
@@ -16,6 +16,7 @@ const App: React.FC<{}> = () => {
   }, [extensionState]);
 
   function YtAdblocker() {
+
     const adblocker = true;
     const removePopup = false;
     // const updateCheck = true;
@@ -67,6 +68,7 @@ const App: React.FC<{}> = () => {
       }, 1000);
     }
     function removeAds() {
+
       var videoPlayback = 1;
       setInterval(() => {
         var video = document.querySelector("video");
@@ -99,6 +101,11 @@ const App: React.FC<{}> = () => {
               ".zBmRhe-Bz112c"
             ) as HTMLElement | null;
             closeAdCenterButton?.click();
+            const clickSkipButton = document.querySelector(
+              ".ytp-ad-skip-button-modern"
+            ) as HTMLElement | null;
+            console.log(clickSkipButton,"Skiped Skip Button")
+            clickSkipButton?.click();
           } else {
             if (video) video.play();
           }
@@ -119,6 +126,7 @@ const App: React.FC<{}> = () => {
             ".ytp-ad-skip-button-modern",
             ".ytp-ad-skip-button",
             ".ytp-ad-skip-button-slot",
+            ".ytp-ad-text"
           ];
           if (video) {
             video.playbackRate = 8.0;
@@ -126,6 +134,7 @@ const App: React.FC<{}> = () => {
             skipButtons.forEach((selector) => {
               const elements = document.querySelectorAll(selector);
               if (elements && elements.length > 0) {
+              console.log(elements,"Elements Found")
                 elements.forEach((element) => {
                   (element as HTMLElement).click();
                 });
@@ -139,7 +148,7 @@ const App: React.FC<{}> = () => {
             }
           }
 
-          // console.log("skipped Ad");
+          console.log("skipped Ad");
         } else {
           if (video && video?.playbackRate == 8.0) {
             video.playbackRate = videoPlayback;
