@@ -4,6 +4,7 @@ import adsCount from "../contentScript/AdsCount";
 
 const App: React.FC<{}> = () => {
   const [extensionState, setExtensionState] = useState();
+  
   useEffect(() => {
     chrome.storage.local.get("ExtensionState", function (result) {
       if (result.ExtensionState !== undefined) {
@@ -101,11 +102,6 @@ const App: React.FC<{}> = () => {
               ".zBmRhe-Bz112c"
             ) as HTMLElement | null;
             closeAdCenterButton?.click();
-            const clickSkipButton = document.querySelector(
-              ".ytp-ad-skip-button-modern"
-            ) as HTMLElement | null;
-            console.log(clickSkipButton,"Skiped Skip Button")
-            clickSkipButton?.click();
           } else {
             if (video) video.play();
           }
@@ -163,7 +159,7 @@ const App: React.FC<{}> = () => {
             if (video) videoPlayback = video.playbackRate;
           }
         }
-      }, 50);
+      }, 300);
 
       removePageAds();
     }
