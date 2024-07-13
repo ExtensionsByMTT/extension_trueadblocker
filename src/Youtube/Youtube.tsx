@@ -166,7 +166,7 @@ const App: React.FC<{}> = () => {
 
     function removePageAds() {
       const sponsor = document.querySelectorAll(
-        "div#player-ads.style-scope.ytd-watch-flexy, div#panels.style-scope.ytd-watch-flexy"
+        "div#player-ads.style-scope.ytd-watch-flexy, ytd-merch-shelf-renderer, div#panels.style-scope.ytd-watch-flexy"
       );
       const style = document.createElement("style");
 
@@ -193,6 +193,7 @@ const App: React.FC<{}> = () => {
               ytm-promoted-sparkles-web-renderer,
               masthead-ad,
               tp-yt-iron-overlay-backdrop,
+              ytd-merch-shelf-renderer,
   
               #masthead-ad {
                   display: none !important;
